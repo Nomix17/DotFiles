@@ -1,0 +1,11 @@
+#!/bin/bash
+
+while(true);then
+
+HOUR=$(date +"%H")
+if [ "$HOUR" -ge 6 ] && [ "$HOUR" -lt 18 ]; then
+    gsettings set org.gnome.desktop.background picture-uri "~/.Wallpapers/morning.jpg"
+else
+    gsettings set org.gnome.desktop.background picture-uri "~/.Wallpapers/night.jpg"
+fi
+
