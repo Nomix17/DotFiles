@@ -1,0 +1,41 @@
+# .bashrc
+
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+prompt_command(){
+    local env_indicator=""
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        local venv_name=$(basename "$VIRTUAL_ENV")
+        env_indicator="\[\033[38;2;136;136;136m\]($venv_name) \[\e[m\]"
+    elif [[ -n "$CONDA_DEFAULT_ENV" ]]; then
+        env_indicator="\[\033[38;2;136;136;136m\]($CONDA_DEFAULT_ENV) \[\e[m\]"
+    fi
+
+    if [ "$PWD" = "$HOME" ]; then
+        PS1="${env_indicator}\[\033[38;2;136;136;136m\]~>\[\e[m\] "
+    else
+        PS1="${env_indicator}\[\033[38;2;136;136;136m\]\w\[\e[m\] "
+    fi
+}
+PROMPT_COMMAND=prompt_command
+
+
+if [ -d ~/.bashrc.d ]; then
+    for rc in ~/.bashrc.d/*; do
+        if [ -f "$rc" ]; then
+            . "$rc"
+        fi
+    done
+fi
+unset rc
+
+
+export PATH="$PATH:/home/pain/.local/bin"
+
+# Aliases
+alias ll='ls -l'
+
+
+source .pvenvs/main/bin/activate
