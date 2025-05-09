@@ -30,13 +30,13 @@ function keydownfunction(event){
 
     if(key == "k"){//UP
         console.log("UP");
-        window.scrollY += VerticalJump;
+        window.scrollY -= VerticalJump;
         event.preventDefault();
         event.stopImmediatePropagation();
 
     }else if(key == "j"){ //down
         console.log("DOWN");
-        window.scrollY -= VerticalJump;
+        window.scrollY += VerticalJump;
         event.preventDefault();
         event.stopImmediatePropagation();
 
