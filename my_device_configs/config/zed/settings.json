@@ -1,0 +1,22 @@
+{
+  "tab_size": 2,
+  "autosave": { "after_delay": { "milliseconds": 100 } },
+  "telemetry": {
+    "metrics": false,
+    "diagnostics": false
+  },
+  "buffer_font_weight": 300,
+  "ui_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "ui_font_size": 14,
+  "buffer_font_size": 14,
+  "theme": {
+    "mode": "system",
+    "light": "Catppuccin Mocha - No Italics",
+    "dark": "Azure Contrast"
+  },
+  "keymaps": {
+    "open_folder": ["ctrl+k o"],
+    "delete_line": null
+  }
+}
