@@ -5,8 +5,8 @@ vim.o.background = "dark"
 vim.g.python3_host_prog = '/usr/bin/python3'
 vim.opt.expandtab = true         -- Use spaces instead of tabs
 vim.opt.number = true            -- Show line numbers
-vim.opt.shiftwidth = 4           -- Number of spaces per indent
-vim.opt.tabstop = 4              -- Number of spaces per tab
+vim.opt.shiftwidth = 2           -- Number of spaces per indent
+vim.opt.tabstop = 2              -- Number of spaces per tab
 vim.opt.autoindent = true        -- Auto-indent new lines
 vim.opt.clipboard = "unnamedplus" -- Enable system clipboard integration
 
