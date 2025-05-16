@@ -40,6 +40,11 @@ vim.cmd("colorscheme stealth-contrast")
 vim.g.airline_theme = 'ouo'
 
 
+--Jump
+vim.keymap.set('n', '<C-S-j>', '5j', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-S-k>', '5k', { noremap = true, silent = true })
+
+
 
 -- Key mappings
 local map = vim.api.nvim_set_keymap
