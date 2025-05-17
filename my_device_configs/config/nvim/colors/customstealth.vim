@@ -58,7 +58,7 @@ exe "hi! VertSplit"     "guifg=".s:indent_guide "guibg=".s:indent_guide "gui=NON
 exe "hi! MatchParen"    "guifg=".s:foreground  "guibg=#3c4044"      "gui=NONE"
 exe "hi! StatusLine"    "guifg=#ffffff"        "guibg=#141617"        "gui=NONE"
 exe "hi! StatusLineNC"  "guifg=".s:foreground  "guibg=#191b1d"        "gui=NONE"
-exe "hi! Pmenu"         "guifg=".s:foreground  "guibg=#0d0e0f"        "gui=NONE"
+exe "hi! Pmenu"         "guifg=".s:foreground  "guibg=#191b1d"        "gui=NONE"
 exe "hi! PmenuSel"      "guifg=#0d0e0f"        "guibg=#474c51"        "gui=NONE"
 exe "hi! Search"        "guifg=#ffffff"        "guibg=#333536"        "gui=NONE"
 exe "hi! IncSearch"     "guifg=#ffffff"        "guibg=#333536"        "gui=NONE"
@@ -67,7 +67,7 @@ exe "hi! SignColumn"    "guifg=".s:foreground  "guibg=".s:background  "gui=NONE"
 exe "hi! Folded"        "guifg=".s:comment     "guibg=#191b1d"        "gui=NONE"
 exe "hi! FoldColumn"    "guifg=".s:comment     "guibg=".s:background  "gui=NONE"
 exe "hi! DiffAdd"       "guifg=NONE"           "guibg=#a7da1e22"      "gui=NONE"
-exe "hi! DiffDelete"    "guifg=#664e4d"        "guibg=#e61f4422"      "gui=NONE"
+exe "hi! DiffDelete"    "guifg=#664e4d"        "guibg=#0d0e0f"      "gui=NONE"
 exe "hi! DiffChange"    "guifg=NONE"           "guibg=#f7b83d22"      "gui=NONE"
 exe "hi! DiffText"      "guifg=NONE"           "guibg=#f7b83d44"      "gui=NONE"
 exe "hi! NonText"       "guifg=".s:indent_guide "guibg=NONE"          "gui=NONE"
@@ -92,7 +92,7 @@ exe "hi! Identifier"    "guifg=".s:variable    "guibg=NONE"           "gui=NONE"
 exe "hi! Function"      "guifg=".s:function_name "guibg=NONE"         "gui=NONE"
 
 " Punctuation highlighting (from custom rules)
-exe "hi! Delimiter"     "guifg=".s:punctuation  "guibg=NONE"           "gui=NONE"
+exe "hi! Delimiter"     "guifg=".s:special_punct  "guibg=NONE"           "gui=NONE"
 exe "hi! SpecialChar"   "guifg=".s:punctuation  "guibg=NONE"           "gui=NONE"
 exe "hi! Quote"         "guifg=".s:punctuation  "guibg=NONE"           "gui=NONE" 
 exe "hi! Operator"      "guifg=".s:special_punct "guibg=NONE"          "gui=NONE"
@@ -306,3 +306,4 @@ endif
 if &t_Co < 256
   let g:stealth_contrast_low_color = 1
 endif
+
