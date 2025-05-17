@@ -18,7 +18,7 @@ set background=dark
 " Define colors
 let s:background     = "#0d0e0f"
 let s:foreground     = "#5f656d"
-let s:selection      = "#888888"
+let s:selection      = "#333536"
 let s:line_highlight = "#141617"
 let s:comment        = "#323538"
 let s:string         = "#545a60"
@@ -26,18 +26,18 @@ let s:number         = "#545a60"
 let s:constant       = "#474c51"
 let s:keyword        = "#474c51"
 let s:storage        = "#474c51"
-let s:type           = "#3c4044"
+let s:type           = "#474c51"
 let s:class_name     = "#474c51"
-let s:function_name  = "#545a60"
+let s:function_name  = "#474c51"
 let s:parameter      = "#727982"
 let s:tag_name       = "#3c4044"
 let s:tag_attribute  = "#474c51"
 let s:library_func   = "#3c4044"
 let s:library_const  = "#474c51"
 let s:library_type   = "#474c51"
-let s:invalid        = "#cf433e"
+let s:invalid        = "#9e6260"
 let s:invalid_bg     = "#664e4d"
-let s:diff_deleted   = "#e61f44"
+let s:diff_deleted   = "#9e6260"
 let s:diff_inserted  = "#a7da1e"
 let s:diff_changed   = "#f7b83d"
 let s:cursor         = "#f8f8f0"
@@ -53,15 +53,15 @@ exe "hi! Cursor"        "guifg=".s:background  "guibg=".s:cursor      "gui=NONE"
 exe "hi! CursorLine"    "guifg=NONE"           "guibg=".s:line_highlight "gui=NONE"
 exe "hi! LineNr"        "guifg=".s:line_number "guibg=".s:background  "gui=NONE"
 exe "hi! CursorLineNr"  "guifg=".s:foreground  "guibg=".s:line_highlight "gui=NONE"
-exe "hi! Visual"        "guifg=NONE"           "guibg=".s:selection   "gui=NONE"
+exe "hi! Visual"        "guifg=#ffffff"           "guibg=".s:selection   "gui=NONE"
 exe "hi! VertSplit"     "guifg=".s:indent_guide "guibg=".s:indent_guide "gui=NONE"
 exe "hi! MatchParen"    "guifg=".s:foreground  "guibg=#3c4044"      "gui=NONE"
 exe "hi! StatusLine"    "guifg=#ffffff"        "guibg=#141617"        "gui=NONE"
 exe "hi! StatusLineNC"  "guifg=".s:foreground  "guibg=#191b1d"        "gui=NONE"
 exe "hi! Pmenu"         "guifg=".s:foreground  "guibg=#0d0e0f"        "gui=NONE"
 exe "hi! PmenuSel"      "guifg=#0d0e0f"        "guibg=#474c51"        "gui=NONE"
-exe "hi! Search"        "guifg=#a39ea1"        "guibg=#443f43"        "gui=NONE"
-exe "hi! IncSearch"     "guifg=#a39ea1"        "guibg=##443f43"        "gui=NONE"
+exe "hi! Search"        "guifg=#ffffff"        "guibg=#333536"        "gui=NONE"
+exe "hi! IncSearch"     "guifg=#ffffff"        "guibg=#333536"        "gui=NONE"
 exe "hi! ColorColumn"   "guifg=NONE"           "guibg=#141617"        "gui=NONE"
 exe "hi! SignColumn"    "guifg=".s:foreground  "guibg=".s:background  "gui=NONE"
 exe "hi! Folded"        "guifg=".s:comment     "guibg=#191b1d"        "gui=NONE"
@@ -165,25 +165,47 @@ exe "hi! GitGutterChange"         "guifg=".s:diff_changed  "guibg=".s:background
 exe "hi! GitGutterDelete"         "guifg=".s:diff_deleted  "guibg=".s:background "gui=NONE"
 exe "hi! GitGutterChangeDelete"   "guifg=".s:diff_changed  "guibg=".s:background "gui=NONE"
 
-" Terminal colors
-if has('nvim')
-  let g:terminal_color_0  = "#191b1d"
-  let g:terminal_color_1  = "#888888"
-  let g:terminal_color_2  = "#474c51"
-  let g:terminal_color_3  = "#474c51"
-  let g:terminal_color_4  = "#545a60"
-  let g:terminal_color_5  = "#474c51"
-  let g:terminal_color_6  = "#141617"
-  let g:terminal_color_7  = "#6b727b"
-  let g:terminal_color_8  = "#141617"
-  let g:terminal_color_9  = "#888888"
-  let g:terminal_color_10 = "#6c737a"
-  let g:terminal_color_11 = "#777f87"
-  let g:terminal_color_12 = "#858d95"
-  let g:terminal_color_13 = "#777f87"
-  let g:terminal_color_14 = "#6c737a"
-  let g:terminal_color_15 = "#9298a0"
-endif
+" C++ specific syntax highlighting
+exe "hi! cppStatement"    "guifg=".s:keyword      "guibg=NONE"  "gui=NONE"
+exe "hi! cppType"         "guifg=".s:type         "guibg=NONE"  "gui=NONE"
+exe "hi! cppStorageClass" "guifg=".s:storage      "guibg=NONE"  "gui=NONE"
+exe "hi! cppStructure"    "guifg=".s:type         "guibg=NONE"  "gui=NONE"
+exe "hi! cppException"    "guifg=".s:keyword      "guibg=NONE"  "gui=NONE"
+exe "hi! cppOperator"     "guifg=".s:special_punct "guibg=NONE" "gui=NONE"
+exe "hi! cppCast"         "guifg=".s:special_punct "guibg=NONE" "gui=NONE"
+exe "hi! cppBoolean"      "guifg=".s:constant     "guibg=NONE"  "gui=NONE"
+exe "hi! cppConstant"     "guifg=".s:constant     "guibg=NONE"  "gui=NONE"
+exe "hi! cppModifier"     "guifg=".s:keyword      "guibg=NONE"  "gui=NONE"
+exe "hi! cppNumber"       "guifg=".s:number       "guibg=NONE"  "gui=NONE"
+exe "hi! cppString"       "guifg=".s:string       "guibg=NONE"  "gui=NONE"
+exe "hi! cppIdentifier"   "guifg=".s:variable     "guibg=NONE"  "gui=NONE"
+
+" Special C++ punctuation and symbols
+exe "hi! cppDelimiter"    "guifg=".s:punctuation  "guibg=NONE"  "gui=NONE"
+exe "hi! cppBracket"      "guifg=".s:punctuation  "guibg=NONE"  "gui=NONE"
+exe "hi! cppAccess"       "guifg=".s:special_punct "guibg=NONE" "gui=NONE"
+exe "hi! cppSymbol"       "guifg=".s:punctuation  "guibg=NONE"  "gui=NONE"
+
+" Explicit highlighting for common C++ constructs
+au FileType cpp syntax match cppSpecialSymbol /[&*<>=:;,.\-+!|?]/
+au FileType cpp syntax match cppBracket /[\[\](){}<>]/
+au FileType cpp syntax match cppCastOperator /\<static_cast\>\|\<dynamic_cast\>\|\<const_cast\>\|\<reinterpret_cast\>/
+au FileType cpp syntax match cppAccess /\.\|->/
+
+" Link to our custom highlighting
+hi! link cppSpecialSymbol StealthPunctuation
+hi! link cppBracket      StealthPunctuation
+hi! link cppCastOperator cppCast
+hi! link cppAccess       StealthPunctuationAccess
+
+" Additional links for standard C++ syntax groups
+hi! link cppSTL          Type
+hi! link cppSTLType      Type
+hi! link cppSTLFunction  Function
+hi! link cppSTLConstant  Constant
+hi! link cppSTLNamespace Identifier
+hi! link cppScopeDelim   StealthPunctuation
+hi! link cppTemplateParam Type
 
 " Link groups to their parent styles
 hi! link Character       String
@@ -259,6 +281,26 @@ hi! link javaBraces                    StealthPunctuation
 " Language-specific syntaxes often have their own punctuation groups
 hi! link htmlTag                       StealthPunctuation
 hi! link xmlTag                        StealthPunctuation
+
+" Terminal colors
+if has('nvim')
+  let g:terminal_color_0  = "#191b1d"
+  let g:terminal_color_1  = "#888888"
+  let g:terminal_color_2  = "#474c51"
+  let g:terminal_color_3  = "#474c51"
+  let g:terminal_color_4  = "#545a60"
+  let g:terminal_color_5  = "#474c51"
+  let g:terminal_color_6  = "#141617"
+  let g:terminal_color_7  = "#6b727b"
+  let g:terminal_color_8  = "#141617"
+  let g:terminal_color_9  = "#888888"
+  let g:terminal_color_10 = "#6c737a"
+  let g:terminal_color_11 = "#777f87"
+  let g:terminal_color_12 = "#858d95"
+  let g:terminal_color_13 = "#777f87"
+  let g:terminal_color_14 = "#6c737a"
+  let g:terminal_color_15 = "#9298a0"
+endif
 
 " Override terminal version to ensure it loads even in limited environments
 if &t_Co < 256
