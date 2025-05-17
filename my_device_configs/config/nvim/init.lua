@@ -29,6 +29,7 @@ require('packer').startup(function()
     use 'rainglow/vim'
     use 'romgrk/barbar.nvim'
     use 'nvim-tree/nvim-web-devicons'
+    use 'petertriho/nvim-scrollbar'
     use {"akinsho/toggleterm.nvim", tag = '*', config = function()
   require("toggleterm").setup()
 end}
@@ -36,7 +37,8 @@ end}
 end)
 
 -- Set colorscheme
-vim.cmd("colorscheme stealth-contrast")
+vim.cmd("colorscheme customstealth")
+-- vim.cmd("colorscheme stealth-contrast")
 vim.g.airline_theme = 'ouo'
 
 
@@ -82,4 +84,3 @@ map('n', '<C-A-Up>', '<C-w>k', opts)
 map('n', '<C-A-Down>', '<C-w>j', opts)
 map('t', '<C-A-Up>', '<C-\\><C-n><C-w>k', opts)
 map('t', '<C-A-Down>', '<C-\\><C-n><C-w>j', opts)
-
