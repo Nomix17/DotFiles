@@ -1,8 +1,3 @@
-" stealth-contrast.vim - A subtle dark theme with muted colors
-" Converted from VSCode theme stealth-contrast
-" Maintainer: Claude
-" Last Change: 2025-05-17
-
 " Reset all highlighting to start fresh
 hi clear
 
