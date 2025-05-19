@@ -84,3 +84,6 @@ map('n', '<C-A-Up>', '<C-w>k', opts)
 map('n', '<C-A-Down>', '<C-w>j', opts)
 map('t', '<C-A-Up>', '<C-\\><C-n><C-w>k', opts)
 map('t', '<C-A-Down>', '<C-\\><C-n><C-w>j', opts)
+
+map("n", "<", "<<", opts)
+map("n", ">", ">>", opts)
