@@ -3,18 +3,17 @@ vim.o.mouse = 'a'
 vim.o.termguicolors = true 
 vim.o.background = "dark"
 vim.g.python3_host_prog = '/usr/bin/python3'
-vim.opt.expandtab = true         -- Use spaces instead of tabs
-vim.opt.number = true            -- Show line numbers
-vim.opt.shiftwidth = 2           -- Number of spaces per indent
-vim.opt.tabstop = 2              -- Number of spaces per tab
-vim.opt.autoindent = true        -- Auto-indent new lines
-vim.opt.clipboard = "unnamedplus" -- Enable system clipboard integration
+vim.opt.expandtab = true
+vim.opt.number = true
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.autoindent = true
+vim.opt.clipboard = "unnamedplus"
 
 -- Packer plugin manager setup
 vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function()
     use 'wbthomason/packer.nvim'  -- Packer manager
-    use 'arcticicestudio/nord-vim' -- Nord theme
     use 'catppuccin/nvim'          -- Additional theme option
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
@@ -80,10 +79,6 @@ vim.keymap.set('n', '<C-w>', '<Cmd>BufferClose<CR>', { silent = true })
 vim.keymap.set('n', '<C-S-t>', '<Cmd>BufferRestore<CR>', { silent = true })
 
 map('n', '<C-a>', 'ggVG', opts)
-map('n', '<C-A-Up>', '<C-w>k', opts)
-map('n', '<C-A-Down>', '<C-w>j', opts)
-map('t', '<C-A-Up>', '<C-\\><C-n><C-w>k', opts)
-map('t', '<C-A-Down>', '<C-\\><C-n><C-w>j', opts)
-
 map("n", "<", "<<", opts)
 map("n", ">", ">>", opts)
+map("i", "jj", "<ESC>", opts)
