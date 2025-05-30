@@ -1,14 +1,20 @@
 {
     "workbench.colorTheme": "Stealth Contrast (rainglow)",
-    "editor.fontFamily": "'JetBrains Mono','Droid Sans Mono', 'monospace', monospace",
+    "editor.fontFamily": "'JetBrainsMono NF','Droid Sans Mono', 'monospace', monospace",
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 10,
     "editor.fontSize": 17,
-    // "glassit.alpha": 225,
     "code-runner.runInTerminal": true,
     "terminal.integrated.inheritEnv": false,
-    "workbench.statusBar.visible": true,
+
+    "window.titleBarStyle": "native",
+    "window.commandCenter": false,
+    "chat.commandCenter.enabled": false,
+    "window.menuBarVisibility": "toggle",
+    "workbench.layoutControl.enabled": false,
+
     "editor.bracketPairColorization.enabled": false,
+    
     "editor.tokenColorCustomizations": {
         "textMateRules": [
             {
@@ -90,5 +96,5 @@
         "merge.commonContentBackground": "#2196F340",
         "merge.border": "#275872"
     },
-    
+
 }
