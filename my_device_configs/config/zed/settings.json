@@ -18,5 +18,13 @@
   "keymaps": {
     "open_folder": ["ctrl+k o"],
     "delete_line": null
-  }
+  },
+  "vim_mode": true,
+  "vim": {
+    "use_system_clipboard": "always",
+    "use_multiline_find": true
+  },
+  "hard_tabs": false,
+  "show_line_numbers": true,
+  "auto_indent": true
 }
