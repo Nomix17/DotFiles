@@ -23,6 +23,7 @@
       "alt-7": ["pane::ActivateItem", 6],
       "alt-8": ["pane::ActivateItem", 7],
       "alt-9": ["pane::ActivateItem", 8],
+      "ctrl-j": "terminal_panel::ToggleFocus",
       "ctrl-w": "pane::CloseActiveItem",
       "ctrl-a": "editor::SelectAll",
       ">": "editor::Indent",
