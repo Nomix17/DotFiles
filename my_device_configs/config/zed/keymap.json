@@ -7,15 +7,40 @@
 // from the command palette.
 [
   {
-    "context": "Workspace",
+    "context": "VimControl && !menu",
     "bindings": {
-      // "shift shift": "file_finder::Toggle"
+      "shift-g": "editor::MoveToEnd",
+      "ctrl-shift-j": "vim::Down",
+      "ctrl-shift-k": "vim::Up",
+      "ctrl-b": "project_panel::ToggleFocus",
+      "ctrl-f": "project_panel::ToggleFocus",
+      "alt-1": ["pane::ActivateItem", 0],
+      "alt-2": ["pane::ActivateItem", 1], 
+      "alt-3": ["pane::ActivateItem", 2],
+      "alt-4": ["pane::ActivateItem", 3],
+      "alt-5": ["pane::ActivateItem", 4],
+      "alt-6": ["pane::ActivateItem", 5],
+      "alt-7": ["pane::ActivateItem", 6],
+      "alt-8": ["pane::ActivateItem", 7],
+      "alt-9": ["pane::ActivateItem", 8],
+      "ctrl-w": "pane::CloseActiveItem",
+      "ctrl-a": "editor::SelectAll",
+      ">": "editor::Indent",
+      "<": "editor::Outdent"
+    }
+  },
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "j j": "vim::NormalBefore"
     }
   },
   {
     "context": "Editor",
     "bindings": {
-      // "j k": ["workspace::SendKeystrokes", "escape"]
+      "ctrl-shift-c": "editor::Copy",
+      "ctrl-shift-x": "editor::Cut",
+      "ctrl-shift-v": "editor::Paste"
     }
   }
 ]
