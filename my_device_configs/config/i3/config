@@ -184,8 +184,11 @@ bindsym $mod+r mode "resize"
 exec --no-startup-id /usr/lib/gsd-xsettings exec --no-startup-id blueman-applet
 
 
-for_window [class="^.*"] border pixel 1 new_window pixel 1
 
+
+
+# Borders configs 
+for_window [class="^.*"] border pixel 1 new_window pixel 1
 client.focused          #636363 #636363 #ffffff #636363
 client.unfocused        #1b2021 #1b2021 #636363 #1b2021
 client.focused_inactive #484e50 #5f676a #d3dae3 #5f676a
@@ -200,10 +203,9 @@ for_window [class="Virtual Machine Manager"] floating enable
 
 # Autostarts 
 exec --no-startup-id picom
-exec --no-startup-id ~/.config/custom-scripts/pnp.sh 
+exec --no-startup-id ~/.config/custom-scripts/mouseConfigs.sh 
 exec --no-startup-id dunst
 exec --no-startup-id ~/.config/custom-scripts/Librewolf_Auto.sh
-exec --no-startup-id kdeconnect-cli
 
 # Keybinding
 bindsym $mod+a exec rofi -show drun -theme ~/.config/rofi/app-launcher/phantom.rasi
@@ -221,8 +223,10 @@ bindsym Control+Mod1+t exec alacritty
 
 
 # Always running
+exec_always --no-startup-id i3-autolayout autolayout
 exec_always ~/.config/polybar/launch.sh
 exec_always feh --bg-fill ~/.Wallpapers/92.png
+exec_always kdeconnect-cli
 
 gaps  inner 6
 gaps outer 0
