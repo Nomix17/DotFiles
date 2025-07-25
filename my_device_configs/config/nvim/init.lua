@@ -16,18 +16,20 @@ require('packer').startup(function()
     use 'wbthomason/packer.nvim'  -- Packer manager
     use 'catppuccin/nvim'          -- Additional theme option
     use 'tpope/vim-surround'
+    use 'neoclide/coc.nvim' 
     use 'tpope/vim-commentary'
     use 'ap/vim-css-color'
     use 'preservim/nerdtree'
     use 'rafi/awesome-vim-colorschemes'
+    use 'nvim-tree/nvim-web-devicons'
+    use 'lewis6991/gitsigns.nvim'
+    use 'romgrk/barbar.nvim'
     use 'vim-airline/vim-airline'
     use 'vim-airline/vim-airline-themes'
     use 'terryma/vim-multiple-cursors'
     use 'ryanoasis/vim-devicons'
     use 'mg979/vim-visual-multi'
     use 'rainglow/vim'
-    use 'romgrk/barbar.nvim'
-    use 'nvim-tree/nvim-web-devicons'
     use 'petertriho/nvim-scrollbar'
     use {"akinsho/toggleterm.nvim", tag = '*', config = function()
   require("toggleterm").setup()
@@ -36,10 +38,8 @@ end}
 end)
 
 -- Set colorscheme
-vim.cmd("colorscheme customstealth")
--- vim.cmd("colorscheme stealth-contrast")
+vim.cmd("colorscheme azure-contrast")
 vim.g.airline_theme = 'ouo'
-
 
 --Jump
 vim.keymap.set('n', '<C-S-j>', '5j', { noremap = true, silent = true })
@@ -82,3 +82,18 @@ map('n', '<C-a>', 'ggVG', opts)
 map("n", "<", "<<", opts)
 map("n", ">", ">>", opts)
 map("i", "jj", "<ESC>", opts)
+map("i", "JJ", "<ESC>", opts)
+map("i", "Jj", "<ESC>", opts)
+map("i", "jJ", "<ESC>", opts)
+
+
+require'barbar'.setup {
+  icons = {
+    separator = {left = '▎', right = ''},
+    inactive = {separator = {left = '▎', right = ''}},
+  },
+  
+  animation = true,
+  
+  clickable = true,
+}
