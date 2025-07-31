@@ -1,5 +1,5 @@
 body,.footer{
-    background-color:#131722;
+    background-color:#0f121b;
     height:100%;
 }
 .triangle-down,
@@ -10,7 +10,6 @@ body,.footer{
 #inputEpisode,
 .menu-item-21993,
 .anime-page-link,
-.main-didget-head,
 .search-in-episodes-list,
 .panel-heading{
     display:none!important;
