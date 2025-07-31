@@ -1,10 +1,13 @@
+body,.footer{
+    background-color:#131722;
+    height:100%;
+}
 .triangle-down,
 .second-section+.container,
 .col-md-4.col-sm-12,
 .site-copyrights,
 #disqus_thread,
 #inputEpisode,
-.main-widget-body h3,
 .menu-item-21993,
 .anime-page-link,
 .main-didget-head,
@@ -24,9 +27,10 @@
 .row{
     background-color:#0f121b;
 }
-.episode-watch-links  .row,.user-post-info-content .row ,.container.header-navbar-container .row{
+.episode-watch-links  .row,.user-post-info-content .row ,.container.header-navbar-container .row,.anime-list-content{
     background-color:#131722;
 }
+
 .container.episode-watch-container .row:first-of-type {
 
     padding-top: 15px;
@@ -46,4 +50,17 @@ li{
 }
 #iframe-container{
     background-image:none;
+}
+
+.header-navbar,
+.page-content-container{
+    background-color:#131722;
+}
+
+li[id^="menu-item-"] a[href] {
+    color: white;
+}
+
+li[id^="menu-item-"]:hover{
+    color:black;
 }
