@@ -1,0 +1,22 @@
+h3{
+    color:white;
+}
+.col-md-6,
+.user-post-info-content,
+.footer{
+    background-color:#0f121b;
+}
+.all-episodes-head{
+    background-color:#131722;
+}
+.all-episodes{
+    border: 1px solid rgba(255,255,255,0.4);
+    margin-top:10px;
+}
+.server-link{
+    background-color:#131722;
+    border-radius:10px;
+}
+h3 strong{
+    display:none;
+}
