@@ -1,0 +1,9 @@
+body,.footer,html{
+    background-color:#0f121b;
+    max-height:100%;
+    overscroll-behavior: contain; /* to control the behavior */
+
+}
+.footer{
+    height:100%;
+}
