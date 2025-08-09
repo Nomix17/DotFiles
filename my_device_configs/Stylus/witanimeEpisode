@@ -3,20 +3,68 @@ h3{
 }
 .col-md-6,
 .user-post-info-content,
-.footer{
+.footer,
+.episode-watch-links .row{
     background-color:#0f121b;
 }
 .all-episodes-head{
     background-color:#131722;
 }
+.all-episodes *{
+  border-radius:10px;
+}
+div[class="all-episodes-head"]{
+    border-radius:10px 10px 0px 0px;
+}
+
 .all-episodes{
+    background-color:#0f121b!important;
     border: 1px solid rgba(255,255,255,0.4);
-    margin-top:10px;
+    margin-top:12px;
+    height:98%;
+    border-radius:10px;
 }
 .server-link{
     background-color:#131722;
-    border-radius:10px;
+    border-radius:10px !important;
 }
+.server-link:hover{
+    color:white !important;
+}
+
 h3 strong{
     display:none;
+}
+li{
+    border:none !important;
+}
+
+#mCSB_1_container li:hover{
+    border-radius:0;
+    background-color:#0d1d27 !important;
+    color:white !important;
+}
+
+#mCSB_1_container li {
+    display: block;      /* Ensure it behaves as a block element */
+    width: 100%;         /* Fill the container width */
+}
+
+#mCSB_1_container li a {
+    display: block;      /* Make the link fill the li */
+    width: 100%;
+}
+
+div[class="col-md-3 col-md-pull-9 col-sm-12 col-no-padding-left"]{
+    margin:0;
+    padding:0;
+}
+
+div[class="panel-body"]{
+  border-radius:10px;
+}
+div[class="panel with-nav-tabs panel-default"]{
+    border:1px solid rgba(255,255,255,0.4);
+    border-radius:10px;
+    
 }
