@@ -7,3 +7,11 @@ body,.footer,html{
 .footer{
     height:100%;
 }
+
+p[class="anime-story"]{
+    margin:10px 0px 10px 0px !important;
+}
+
+p[class="anime-story"]+div[class="row"]{
+    margin-bottom:20px;
+}
