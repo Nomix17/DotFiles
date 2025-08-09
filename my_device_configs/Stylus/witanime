@@ -35,9 +35,7 @@ body,.footer{
     padding-top: 15px;
     padding-bottom: 15px;
 }
-li{
-    margin-left:20px;
-}
+
 .second-section{
     background-image:none;
 }
@@ -45,6 +43,7 @@ li{
     color:white;
     background-color:#1e1e1e;
     margin-top:10px;
+    margin-right:20px;
     border-radius:100px;
 }
 #iframe-container{
@@ -63,3 +62,58 @@ li[id^="menu-item-"] a[href] {
 li[id^="menu-item-"]:hover{
     color:black;
 }
+
+#theme-mode,
+button[class="btn dropdown-toggle"]
+{
+    display: none;
+}
+#ShowSearch i{
+  display: inline;
+  font-size: 1em;
+  line-height: 1;
+  color:#101010;
+}
+#ShowSearch{
+  width:43px;
+  height:43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 16px;
+  border-radius:10px;
+  background-color:#027e96;
+}
+
+#ShowSearch:hover i{
+  color: white;
+}
+div[class="container header-navbar-container"] div[class="row"]{    
+    height:10px;
+}
+div[class="navbar-buttons"]{
+    margin:0px !important; 
+    padding:0px !important;
+}
+
+#searchContent{
+    margin-top:100px;
+}
+input{
+  direction: ltr;
+}
+img[id="lucodeia-no-contents-img"]{
+    display:none;
+}
+div[class="container header-navbar-container"]{
+    margin:0;
+    padding:0;
+}
+.anime-card-container,
+.anime-card-details,
+.episodes-card-container{
+    border:none;
+    border-radius:10px;
+}
+
