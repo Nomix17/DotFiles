@@ -1,4 +1,4 @@
--- General settings
+--- General settings
 vim.o.mouse = 'a'
 vim.o.termguicolors = true 
 vim.o.background = "dark"
@@ -8,6 +8,7 @@ vim.opt.number = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.autoindent = true
+vim.wo.relativenumber = true
 vim.opt.clipboard = "unnamedplus"
 
 -- Packer plugin manager setup
@@ -66,6 +67,7 @@ vim.keymap.set('n', '<A-7>', '<Cmd>BufferGoto 7<CR>', { silent = true, nowait = 
 vim.keymap.set('n', '<A-8>', '<Cmd>BufferGoto 8<CR>', { silent = true, nowait = true })
 vim.keymap.set('n', '<A-9>', '<Cmd>BufferGoto 9<CR>', { silent = true, nowait = true  })
 vim.keymap.set('n', '<A-0>', '<Cmd>BufferLast<CR>', { silent = true, nowait = true  })
+
 vim.keymap.set('n', '<A-d>', '<Cmd>BufferClose<CR>', { silent = true, nowait = true })
 vim.keymap.set('n', '<A-S-D>', '<Cmd>BufferRestore<CR>', { silent = true, nowait = true })
 
@@ -78,6 +80,9 @@ vim.keymap.set('n', '<A-S-.>', '<Cmd>BufferMoveNext<CR>', { silent = true, nowai
 vim.keymap.set('n', '<A-p>', '<Cmd>BufferPick<CR>', { silent = true, nowait = true })
 vim.keymap.set('n', '<A-S-p>', '<Cmd>BufferPickDelete<CR>', { silent = true, nowait = true })
 
+vim.keymap.set('n', 'q',"~",{ silent = true, nowait = true });
+vim.keymap.set('v', 'q',"~",{ silent = true, nowait = true });
+
 map('n', '<C-a>', 'ggVG', opts)
 map("n", "<", "<<", opts)
 map("n", ">", ">>", opts)
@@ -86,6 +91,10 @@ map("i", "JJ", "<ESC>", opts)
 map("i", "Jj", "<ESC>", opts)
 map("i", "jJ", "<ESC>", opts)
 
+vim.api.nvim_set_keymap('n', 'dd', '"_dd', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', 'd', '"_d', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'xx', 'dd', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', 'xx', 'd', { noremap = true, silent = true })
 
 require'barbar'.setup {
   icons = {
@@ -115,4 +124,5 @@ require("ibl").setup({
     show_end = false,
   },
 })
+
 
