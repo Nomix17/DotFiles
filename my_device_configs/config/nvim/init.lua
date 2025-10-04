@@ -41,7 +41,7 @@ end}
 end)
 
 -- Set colorscheme
-vim.cmd("colorscheme azure-contrast")
+vim.cmd("colorscheme customstealth")
 vim.g.airline_theme = 'ouo'
 
 --Jump
@@ -74,8 +74,8 @@ vim.keymap.set('n', '<A-S-D>', '<Cmd>BufferRestore<CR>', { silent = true, nowait
 vim.keymap.set('n', '<A-,>', '<Cmd>BufferPrevious<CR>', { silent = true, nowait = true })
 vim.keymap.set('n', '<A-.>', '<Cmd>BufferNext<CR>', { silent = true, nowait = true })
 
-vim.keymap.set('n', '<A-S-,>', '<Cmd>BufferMovePrevious<CR>', { silent = true, nowait = true })
-vim.keymap.set('n', '<A-S-.>', '<Cmd>BufferMoveNext<CR>', { silent = true, nowait = true })
+vim.keymap.set('n', '<A-S-<>', '<Cmd>BufferMovePrevious<CR>', { silent = true, nowait = true })
+vim.keymap.set('n', '<A-S->>', '<Cmd>BufferMoveNext<CR>', { silent = true, nowait = true })
 
 vim.keymap.set('n', '<A-p>', '<Cmd>BufferPick<CR>', { silent = true, nowait = true })
 vim.keymap.set('n', '<A-S-p>', '<Cmd>BufferPickDelete<CR>', { silent = true, nowait = true })
@@ -92,9 +92,23 @@ map("i", "Jj", "<ESC>", opts)
 map("i", "jJ", "<ESC>", opts)
 
 vim.api.nvim_set_keymap('n', 'dd', '"_dd', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'd', '"_d', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', 'd', '"_d', { noremap = true, silent = true })
+
 vim.api.nvim_set_keymap('n', 'xx', 'dd', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', 'xx', 'd', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', 'x', 'd', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n','m','%',{ noremap = true, silent = true })
+vim.api.nvim_set_keymap('n','M','%',{ noremap = true, silent = true })
+vim.api.nvim_set_keymap('v','m','%',{ noremap = true, silent = true })
+vim.api.nvim_set_keymap('v','M','%',{ noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n','[m','[{',{noremap = true, silent = true })
+vim.api.nvim_set_keymap('n',']m',']}',{noremap = true, silent = true })
+vim.api.nvim_set_keymap('v','[m','[{',{noremap = true, silent = true })
+vim.api.nvim_set_keymap('v',']m',']}',{noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n','<C-d>','ggdG',{noremap = true, silent = true })
 
 require'barbar'.setup {
   icons = {
@@ -115,7 +129,13 @@ end)
 
 require("ibl").setup({
   indent = {
-    char = "┊",
+
+    char ="┊",
+
+    -- char = "┃",
+    
+    -- char = "│",
+
     highlight = { "IndentBlanklineChar" }
   },
   scope = {
@@ -124,5 +144,4 @@ require("ibl").setup({
     show_end = false,
   },
 })
-
 
