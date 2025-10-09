@@ -52,4 +52,8 @@ alias ll='ls -l'
 export PATH="$PATH:/home/pain/.spicetify"
 export PATH="$PATH:/usr/bin"
 
-
+set -o vi
+bind 'set show-mode-in-prompt on'
+bind 'set vi-cmd-mode-string "\e[1 q"'
+bind 'set vi-ins-mode-string "\e[5 q"'
+bind '"jj": vi-movement-mode'
