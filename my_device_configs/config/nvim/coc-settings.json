@@ -1,0 +1,21 @@
+{
+  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/19.1.2/clangd_19.1.2/bin/clangd",
+  "clangd.inlayHints.enable": false,
+  "clangd.arguments": [
+    "--header-insertion=never",
+    "--completion-style=bundled",
+    "--function-arg-placeholders=false",
+    "--compile-commands-dir=."
+  ],
+  "suggest.autoTrigger": "always",
+  "suggest.insertMode": "insert",
+  "suggest.detailField": "menu",
+  "suggest.labelMaxLength": 50,
+  "suggest.snippetSupport": false,
+  "suggest.enablePreview": false,
+  "suggest.enablePreselect": false,
+  "python.formatting.provider": "none",
+  "python.analysis.inlayHints.variableTypes": false,
+  "python.analysis.inlayHints.functionReturnTypes": false,
+  "python.analysis.autoImportCompletions": false
+}
