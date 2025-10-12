@@ -1,0 +1,24 @@
+# General settings
+[window]
+padding = { x = 7, y = 5 }
+dimensions = { columns = 85, lines = 21 }
+
+# Font settings
+[font]
+normal = { family = "JetBrains Mono", style = "Bold" }
+size = 12.0
+
+# Cursor settings
+[cursor]
+style = "Beam"
+
+
+# Colors
+[colors]
+primary = { background = "0x040507", foreground = "0xbdc3c9" }
+cursor = { text = "0x0d0e0f", cursor = "0xb8c4d1" }
+selection = { text = "0x101214", background = "0x4a5057" }
+
+normal = { black = "0x0d0e0f", red = "0x8d949c", green = "0x70777f", yellow = "0x97a1ad", blue = "0x93a8c4", magenta = "0x9ba3ad", cyan = "0x7a8189", white = "0xa8b0ba" }
+
+bright = { black = "0x828b96", red = "0x4a5057", green = "0x101214", yellow = "0x97a1ad", blue = "0x93a8c4", magenta = "0x9ba3ad", cyan = "0x7a8189", white = "0xb8c4d1" }
