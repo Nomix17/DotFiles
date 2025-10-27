@@ -1,0 +1,214 @@
+[
+  {
+    "settings": {
+      "disableAll": false,
+      "exposeIframes": false,
+      "exposeStyleName": false,
+      "keepAlive": 0,
+      "keepAliveIdle": false,
+      "newStyleAsUsercss": false,
+      "openEditInWindow": false,
+      "openEditInWindow.popup": false,
+      "patchCsp": false,
+      "show-badge": true,
+      "styleViaASS": false,
+      "styleViaXhr": false,
+      "urlInstaller": true,
+      "windowPosition": {},
+      "compactWidth": 850,
+      "config.autosave": true,
+      "schemeSwitcher.enabled": "dark",
+      "schemeSwitcher.nightStart": "18:00",
+      "schemeSwitcher.nightEnd": "06:00",
+      "popup.enabledFirst": true,
+      "popup.stylesFirst": true,
+      "popup.autoResort": false,
+      "popup.borders": false,
+      "popup.findSort": "w",
+      "manage.onlyEnabled": false,
+      "manage.onlyLocal": false,
+      "manage.onlyUsercss": false,
+      "manage.onlyEnabled.invert": false,
+      "manage.onlyLocal.invert": false,
+      "manage.onlyUsercss.invert": false,
+      "manage.actions.expanded": false,
+      "manage.backup.expanded": true,
+      "manage.filters.expanded": true,
+      "manage.links.expanded": true,
+      "manage.minColumnWidth": 750,
+      "manage.newUI": true,
+      "manage.newUI.favicons": true,
+      "manage.newUI.faviconsGray": false,
+      "manage.newUI.targets": 3,
+      "manage.newUI.sort": "title,asc",
+      "manage.searchMode": "meta",
+      "editor.options": {},
+      "editor.toc.expanded": true,
+      "editor.options.expanded": true,
+      "editor.options.style.expanded": true,
+      "editor.lint.expanded": true,
+      "editor.publish.expanded": true,
+      "editor.lineWrapping": true,
+      "editor.smartIndent": true,
+      "editor.indentWithTabs": false,
+      "editor.tabSize": 4,
+      "editor.keyMap": "default",
+      "editor.theme": "default",
+      "editor.beautify": {
+        "selector_separator_newline": true,
+        "newline_before_open_brace": false,
+        "newline_after_open_brace": true,
+        "newline_between_properties": true,
+        "newline_before_close_brace": true,
+        "newline_between_rules": false,
+        "preserve_newlines": true,
+        "end_with_newline": false,
+        "indent_conditional": true,
+        "indent_mozdoc": true,
+        "space_around_combinator": true,
+        "space_around_cmp": false
+      },
+      "editor.beautify.hotkey": "",
+      "editor.lintDelay": 300,
+      "editor.linter": "csslint",
+      "editor.lintReportDelay": 500,
+      "editor.matchHighlight": "token",
+      "editor.autoCloseBrackets": true,
+      "editor.autocompleteOnTyping": false,
+      "editor.contextDelete": false,
+      "editor.selectByTokens": true,
+      "editor.arrowKeysTraverse": true,
+      "editor.appliesToLineWidget": true,
+      "editor.autosaveDraft": 10,
+      "editor.livePreview": false,
+      "editor.livePreview.delay": 0.2,
+      "editor.targetsFirst": true,
+      "editor.colorpicker": true,
+      "editor.colorpicker.hexUppercase": false,
+      "editor.colorpicker.hotkey": "",
+      "editor.colorpicker.color": "",
+      "editor.colorpicker.maxHeight": 300,
+      "hotkey._execute_browser_action": "",
+      "hotkey.openManage": "",
+      "hotkey.styleDisableAll": "",
+      "sync.enabled": "none",
+      "iconset": -1,
+      "badgeDisabled": "#8B0000",
+      "badgeNormal": "#006666",
+      "headerWidth.edit": 280,
+      "headerWidth.install": 280,
+      "headerWidth.manage": 280,
+      "popup.search.globals": false,
+      "popupWidth": 246,
+      "popupWidthMax": 280,
+      "updateInterval": 24,
+      "updateOnlyEnabled": false
+    },
+    "order": {
+      "main": [],
+      "prio": []
+    }
+  },
+  {
+    "enabled": true,
+    "installDate": 1741307062121,
+    "name": "DeepBlue-Youtube",
+    "sections": [
+      {
+        "code": "/* main elements */\nhtml,\nbody,\nytd-app,\na[id=\"endpoint\"],\nytd-mini-guide-renderer[class=\"style-scope ytd-app\"],\ndiv[id=\"background\"][class=\"style-scope tp-yt-app-header\"],\ntp-yt-app-header[id=\"header\"],\ndiv[id=\"header\"][class=\"style-scope ytd-app\"],\ndiv[id=\"footer\"][class=\"style-scope ytd-guide-renderer\"],\ndiv[id=\"chips-content\"][class=\"style-scope ytd-feed-filter-chip-bar-renderer\"],\ndiv[id=\"columns\"][class=\"style-scope ytd-watch-flexy\"],\ndiv[id=\"container\"][class=\"style-scope ytd-masthead\"],\nytd-search[class=\"style-scope ytd-page-manager\"],\nytd-browse[class=\"style-scope ytd-page-manager\"],\nytd-guide-section-renderer[class=\"style-scope ytd-guide-renderer\"],\nytd-guide-signin-promo-renderer[class=\"style-scope ytd-guide-renderer\"],\ndiv[id=\"page-header\"],\ndiv[id=\"tabs-inner-container\"],\ndiv[id=\"page-header-banner\"],\ndiv[class=\"ytSearchboxComponentInputBox ytSearchboxComponentInputBoxDark\"]{\n    background-color: #040507 !important;\n}\n\ndiv[id=\"page-header-banner\"]{\n        padding-top:10px !important;\n}\n/*video sides*/\ndiv[class=\"ytp-player-content ytp-timely-actions-content\"]{\n    background-color:#000000;\n}\ndiv[id=\"dismiss-button\"],div[class=\"style-scope ytd-rich-section-renderer\"]{\n    /*display:none !important;*/\n}",
+        "urlPrefixes": [
+          "https://www.youtube.com"
+        ]
+      }
+    ],
+    "updateDate": 1761335299337,
+    "_id": "77279878-3d77-41b0-93fc-d575609c6e6e",
+    "_rev": 1761335299338,
+    "id": 2
+  },
+  {
+    "enabled": true,
+    "installDate": 1741398533894,
+    "name": "witanime",
+    "sections": [
+      {
+        "code": "body,.footer{\n    background-color:#0f121b;\n    height:100%;\n}\n.triangle-down,\n.second-section+.container,\n.col-md-4.col-sm-12,\n.site-copyrights,\n#disqus_thread,\n#inputEpisode,\n.menu-item-21993,\n.anime-page-link,\n.search-in-episodes-list,\n.panel-heading{\n    display:none!important;\n}\n.panel-body,\n.content.episode-download-container,\n.second-section,\n.main-section,\n#mCSB_1,\n#inputEpisode,\n.space,\n.content,\n.header-navbar,\n.row{\n    background-color:#0f121b;\n}\n.episode-watch-links  .row,.user-post-info-content .row ,.container.header-navbar-container .row,.anime-list-content{\n    background-color:#131722;\n}\n\n.container.episode-watch-container .row:first-of-type {\n\n    padding-top: 15px;\n    padding-bottom: 15px;\n}\n\n.second-section{\n    background-image:none;\n}\n.server-link{\n    color:white;\n    background-color:#1e1e1e;\n    margin-top:10px;\n    margin-right:20px;\n    border-radius:100px;\n}\n#iframe-container{\n    background-image:none;\n}\n\n.header-navbar,\n.page-content-container{\n    background-color:#131722;\n}\n\nli[id^=\"menu-item-\"] a[href] {\n    color: white;\n}\n\nli[id^=\"menu-item-\"]:hover{\n    color:black;\n}\n\n#theme-mode,\nbutton[class=\"btn dropdown-toggle\"]\n{\n    display: none;\n}\n#ShowSearch i{\n  display: inline;\n  font-size: 1em;\n  line-height: 1;\n  color:#101010;\n}\n#ShowSearch{\n  width:43px;\n  height:43px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n  font-size: 16px;\n  border-radius:10px;\n  background-color:#027e96;\n}\n\n#ShowSearch:hover i{\n  color: white;\n}\ndiv[class=\"container header-navbar-container\"] div[class=\"row\"]{    \n    height:10px;\n}\ndiv[class=\"navbar-buttons\"]{\n    margin:0px !important; \n    padding:0px !important;\n}\n\n#searchContent{\n    margin-top:100px;\n}\ninput{\n  direction: ltr;\n}\nimg[id=\"lucodeia-no-contents-img\"]{\n    display:none;\n}\ndiv[class=\"container header-navbar-container\"]{\n    margin:0;\n    padding:0;\n}\n\ndiv[class=\"col-lg-3 col-md-3 col-sm-4 col-xs-12 col-no-padding col-mobile-no-padding\"]{\n    background-color:#131722;\n}\n.anime-card-container,\n.anime-card-details,\n.episodes-card-container{\n    border:none;\n    border-radius:10px;\n}\n\na[class=\"see-all\"]{\n    border-radius:10px;\n}\nimg{\n    border-radius:10px 10px 0px 0px;\n}",
+        "urlPrefixes": [
+          "https://witanime."
+        ]
+      }
+    ],
+    "updateDate": 1754782707802,
+    "_id": "a3cc7783-25ad-4097-9fa3-416328b82e8a",
+    "_rev": 1754782707803,
+    "id": 4
+  },
+  {
+    "enabled": true,
+    "installDate": 1741405703876,
+    "name": "duckduckgo",
+    "sections": [
+      {
+        "code": "#react-layout,\n#header_wrapper{\n    color: #101010 !important;\n    background-color: #101010 !important;\n}\n.TQFs9yvBgnOz3EeEI5OL{\n    display: none !important;\n}",
+        "urlPrefixes": [
+          "duckduckgo.com"
+        ]
+      }
+    ],
+    "updateDate": 1741405757102,
+    "_id": "683b4219-6b30-4e42-9e90-4e88f846df22",
+    "_rev": 1741405757102,
+    "id": 5
+  },
+  {
+    "enabled": true,
+    "installDate": 1753976412655,
+    "name": "witanimeSearch",
+    "sections": [
+      {
+        "code": "body,.footer,html{\n    background-color:#0f121b;\n    max-height:100%;\n    overscroll-behavior: contain; /* to control the behavior */\n\n}\n.footer{\n    height:100%;\n}",
+        "regexps": [
+          "^https:\\/\\/witanime\\.[^/]+\\/?\\?search_param.*"
+        ]
+      }
+    ],
+    "updateDate": 1761530951347,
+    "_id": "55488093-e859-423d-bf87-394d173c15a5",
+    "_rev": 1761530951348,
+    "id": 7
+  },
+  {
+    "enabled": true,
+    "installDate": 1753977396004,
+    "name": "witanimeAnime",
+    "sections": [
+      {
+        "code": "body,.footer,html{\n    background-color:#0f121b;\n    max-height:100%;\n    overscroll-behavior: contain; /* to control the behavior */\n\n}\n.footer{\n    height:100%;\n}\n\np[class=\"anime-story\"]{\n    margin:10px 0px 10px 0px !important;\n}\n\np[class=\"anime-story\"]+div[class=\"row\"]{\n    margin-bottom:20px;\n}\n",
+        "urlPrefixes": [
+          "https://witanime\\.[^/]+/anime.*"
+        ]
+      }
+    ],
+    "updateDate": 1761530909158,
+    "_id": "57f31b97-e4fc-40d1-91a1-3d61d13c0038",
+    "_rev": 1761530909159,
+    "id": 8
+  },
+  {
+    "enabled": true,
+    "installDate": 1753977852590,
+    "name": "witanimeEpisode",
+    "sections": [
+      {
+        "code": "\nh3{\n    color:white;\n}\n.col-md-6,\n.user-post-info-content,\n.footer,\n.episode-watch-links .row{\n    background-color:#0f121b;\n}\n.all-episodes-head{\n    background-color:#131722;\n}\n.all-episodes *{\n  border-radius:10px;\n}\ndiv[class=\"all-episodes-head\"]{\n    border-radius:10px 10px 0px 0px;\n}\n\n.all-episodes{\n    background-color:#0f121b!important;\n    border: 1px solid rgba(255,255,255,0.4);\n    margin-top:12px;\n    height:100%;\n    padding-bottom:34%;\n    border-radius:10px;\n}\n.server-link{\n    background-color:#131722;\n    border-radius:10px !important;\n}\n.server-link:hover{\n    color:white !important;\n}\n\nh3 strong{\n    display:none;\n}\nli{\n    border:none !important;\n}\n\n#mCSB_1_container li:hover{\n    border-radius:0;\n    background-color:#0d1d27 !important;\n    color:white !important;\n}\n\n#mCSB_1_container li {\n    display: block;      /* Ensure it behaves as a block element */\n    width: 100%;         /* Fill the container width */\n}\n\n#mCSB_1_container li a {\n    display: block;      /* Make the link fill the li */\n    width: 100%;\n}\n\ndiv[class=\"col-md-3 col-md-pull-9 col-sm-12 col-no-padding-left\"]{\n    margin:0;\n    padding:0;\n}\n\ndiv[class=\"panel-body\"]{\n  border-radius:10px;\n}\ndiv[class=\"panel with-nav-tabs panel-default\"]{\n    border:1px solid rgba(255,255,255,0.4);\n    border-radius:10px;\n    \n}",
+        "regexps": [
+          "https://witanime\\.[^/]+/episode.*"
+        ]
+      }
+    ],
+    "updateDate": 1761530800019,
+    "_id": "457c9831-da19-451a-aa91-89f24ceb0acc",
+    "_rev": 1761530800019,
+    "id": 9
+  }
+]
