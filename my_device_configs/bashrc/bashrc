@@ -52,7 +52,6 @@ alias vi="nvim"
 alias vim="nvim"
 alias fterminal="alacritty >/dev/null 2>&1 & disown"
 alias fmanager="nautilus . > /dev/null 2>&1 & disown"
-alias venv="source ~/.pythonEnv/main/bin/activate"
 alias t="tmux"
 
 mkdircd() { mkdir -p "$1" && cd "$1"; }
