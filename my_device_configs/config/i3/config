@@ -190,7 +190,7 @@ exec --no-startup-id /usr/lib/gsd-xsettings exec --no-startup-id blueman-applet
 
 
 # Borders configs 
-for_window [class="^.*"] border pixel 1 new_window pixel 1
+for_window [class="^.*"] border pixel 1
 client.focused          #636363 #636363 #ffffff #636363
 client.unfocused        #1b2021 #1b2021 #636363 #1b2021
 client.focused_inactive #1b2021 #1b2021 #d3dae3 #1b2021
@@ -202,16 +202,21 @@ client.urgent           #636363 #636363 #ffffff #636363
 for_window [class="Mofi"] floating enable
 for_window [class="VKeyboard"] floating enable
 for_window [class="Virtual Machine Manager"] floating enable
+for_window [instance="Godot_Engine"] floating enable
+for_window [instance="Godot_Engine"] border normal
+# for_window [class="mpv"] floating enable, resize set 600 450
 
 # Autostarts 
 exec --no-startup-id ~/.config/custom-scripts/mouseConfigs.sh 
+exec_always --no-startup-id xinput --set-prop "Logitech G102 LIGHTSYNC Gaming Mouse" "libinput Accel Profile Enabled" 0 1
+exec_always --no-startup-id xinput --set-prop "Logitech G102 LIGHTSYNC Gaming Mouse" "libinput Accel Speed" -0.5
 exec --no-startup-id xset -b
 
 # Keybinding
 bindsym $mod+a exec rofi -show drun -theme ~/.config/rofi/app-launcher/phantom.rasi
 bindsym Control+Mod1+Delete exec  ~/.config/rofi/powermenu/powermenu.sh
-bindsym $mod+S exec ~/.config/custom-scripts/screenshot.sh 
-bindsym $mod+E exec ~/.config/custom-scripts/screenshot.sh edit
+bindsym $mod+S exec --no-startup-id ~/.config/custom-scripts/screenshot.sh
+bindsym $mod+e exec --no-startup-id ~/.config/custom-scripts/screenshot.sh fullscreen
 bindsym Control+Mod1+space exec --no-startup-id i3-msg [class="scrcpy"] move scratchpad && ~/.config/custom-scripts/picture-no-picture.sh
 bindsym F8 exec --no-startup-id i3-msg [class="scrcpy"] move scratchpad && ~/.config/custom-scripts/picture-no-picture.sh
 bindsym Control+Mod1+v exec VKeyboard
