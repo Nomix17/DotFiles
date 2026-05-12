@@ -37,7 +37,6 @@ unset rc
 # ENV 
 export PATH="$PATH:/usr/bin"
 export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:/home/pain/.local/bin"
 export EDITOR=nvim
 export QT_AUDIO_BACKEND=pulseaudio
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
