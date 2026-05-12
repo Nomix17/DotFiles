@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-buildVer="1.2.52.442.g01893f92"
+buildVer="1.2.72.437.gaf82ef12"
 
 command -v perl >/dev/null || { echo -e "\n${red}Error:${clr} perl command not found.\nInstall perl on your system then try again.\n" >&2; exit 1; }
 
@@ -218,6 +218,7 @@ macos_prepare() {
   appBinary="${appPath}/Contents/MacOS/Spotify"
   appBak="${appBinary}.bak"
   cachePath="${HOME}/Library/Caches/com.spotify.client"
+  snapshotBinary="${appPath}/Contents/Frameworks/Chromium Embedded Framework.framework/Resources/v8_context_snapshot.${archVar}.bin"
   xpuiPath="${appPath}/Contents/Resources/Apps"
   [[ "${skipCodesign}" ]] && echo -e "${yellow}Warning:${clr} Codesigning has been skipped.\n" >&2 || true
 }
@@ -225,7 +226,7 @@ macos_prepare() {
 linux_client_variant() {
   [[ "${installPath}" == *"flatpak"* ]] && {
     command -v flatpak >/dev/null && flatpak list | grep spotify >/dev/null && {
-      flatpakVer=$(flatpak info com.spotify.Client | grep Version: | perl -ne '/Version: (1\.[0-9]+\.[0-9]+\.[0-9]+)\.g[0-9a-f]+/ && print "$1"')
+      flatpakVer=$(LANG=C.UTF-8 flatpak info com.spotify.Client | grep Version: | perl -ne '/Version: (1\.[0-9]+\.[0-9]+\.[0-9]+)\.g[0-9a-f]+/ && print "$1"')
       [[ -z "${flatpakVer+x}" ]] && versionFailed='true' || { clientVer="${flatpakVer}"; flatpakClient='true'; }
       cachePath=$(timeout 10 find /var/lib/flatpak/ $HOME/.var/app -type d -path "*com.spotify.Client/cache/spotify*" -name "spotify" -print -quit 2>/dev/null)
     }
@@ -244,7 +245,7 @@ linux_deb_prepare() {
   installOutput="${installPath}"
   linux_client_variant
   installClient='true'
-  grab1=$(echo "==gdwIjYqVzUl1GbHRmdCNzY1tmbjZnUYFme5c0Ysp0MMZ3bENGMShUY" | rev | base64 --decode | base64 --decode)
+  grab1=$(echo "=0TP3xEd5ITW1tmbaBnUzI2dO5GT1o0MiBDbyMmdChlW5lTeMZTTINGMShUY" | rev | base64 --decode | base64 --decode)
   [[ "${stableVar}" ]] && \
   grab2=$(echo "==QP9cWS6ZlMahGdykFaCFDTwkFRaRnRXxUNKhVW1xWbZZXVXpVeadFT1lTbiZXVHJWaGdEZ6lTejBjTYF2axgVTpZUbj5GdIpUaBl3Y0F0UjRXQDJWeWNTW" | rev | base64 --decode | base64 --decode) || \
   grab2=$(echo "==QPJl3YsR2VZJnTXlVU5MkTyE1VihWMTVWeG1mYwpkMMxmVtNWbxkmY2VjMM5WNXFGMOhlWwkTejBjTYF2axgVTpZUbj5GdIpUaBl3Y0F0UjRXQDJWeWNTW" | rev | base64 --decode | base64 --decode)
@@ -319,6 +320,7 @@ linux_prepare() {
   appPath="${installPath}"
   appBinary="${appPath}/spotify"
   appBak="${appBinary}.bak"
+  snapshotBinary="${appPath}/v8_context_snapshot.bin"
   xpuiPath="${appPath}/Apps"
   [[ -z "${cachePath}" ]] && cachePath=$(timeout 10 find / -type d -path "*cache/spotify*" -not -path "*snap/spotify*" -name "spotify" -print -quit 2>/dev/null)
   [[ "${debug}" ]] && echo -e "${green}Debug:${clr} $(cat /etc/*release | grep PRETTY_NAME | cut -d '"' -f2)"
@@ -373,15 +375,17 @@ client_version_output() {
 
 run_prepare() {
   [[ "${platformType}" == "macOS" ]] && macos_prepare || linux_prepare
-  xpuiDir="${xpuiPath}/xpui"
   xpuiBak="${xpuiPath}/xpui.bak"
+  xpuiDir="${xpuiPath}/xpui"
   xpuiSpa="${xpuiPath}/xpui.spa"
-  xpuiJs="${xpuiDir}/xpui.js"
-  xpuiCss="${xpuiDir}/xpui.css"
   dwpPanelSectionJs="${xpuiDir}/dwp-panel-section.js"
   homeHptoJs="${xpuiDir}/home-hpto.js"
+  indexHtml="${xpuiDir}/index.html"
   vendorXpuiJs="${xpuiDir}/vendor~xpui.js"
+  xpuiCss="${xpuiDir}/xpui.css"
   xpuiDesktopModalsJs="${xpuiDir}/xpui-desktop-modals.js"
+  xpuiJs="${xpuiDir}/xpui.js"
+  xpuiSnapshotJs="${xpuiDir}/xpui-snapshot.js"
   existing_client_ver
   client_version_output
   ver_check
@@ -604,8 +608,21 @@ xpui_detect() {
   printf "\xE2\x9C\x94\x20\x43\x72\x65\x61\x74\x65\x64\x20\x62\x61\x63\x6B\x75\x70\n"
 }
 
+snapshot_check() {
+  START_XM="76006100720020005F005F007700650062007000610063006B005F006D006F00640075006C00650073005F005F003D007B00"
+  END_XM="78007000750069002D006D006F00640075006C00650073002E006A0073002E006D0061007000"
+  [[ ! -f "${xpuiJs}" ]] && [[ -f "${xpuiSnapshotJs}" ]] && {
+    [[ "${debug}" ]] && printf "\xE2\x9C\x94\x20\x44\x65\x74\x65\x63\x74\x65\x64\x20\x53\x6E\x61\x70\x73\x68\x6F\x74${clr}\n"
+    perl -e 'use strict; use warnings; use Encode qw(decode); open my $in_fh, "<:raw", $ARGV[0] or die; binmode $in_fh; my $bin_content; { local $/; $bin_content = <$in_fh>; } close $in_fh; die unless (length($bin_content) >= 2 && substr($bin_content, 0, 2) eq "\xFF\xFE") || (length($bin_content) > 100 && substr($bin_content, 1, 1) eq "\x00"); my $start_marker = pack("H*", $ARGV[1]); my $end_marker = pack("H*", $ARGV[2]); my $start_idx = index($bin_content, $start_marker, 2); die if $start_idx == -1; my $end_idx = index($bin_content, $end_marker, $start_idx + length($start_marker)); die if $end_idx == -1; my $extracted = substr($bin_content, $start_idx, $end_idx - $start_idx + length($end_marker)); my $decoded = decode("UTF-16LE", $extracted); open my $out_fh, "+<:encoding(UTF-8)", $ARGV[3] or die; my $existing_content; { local $/; $existing_content = <$out_fh>; } seek $out_fh, 0, 0; print $out_fh $decoded, "\n", $existing_content; truncate $out_fh, tell($out_fh); close $out_fh;' "${snapshotBinary}" "${START_XM}" "${END_XM}" "${xpuiSnapshotJs}" || { uninstall_spotx; echo -e "\n${red}Error:${clr} Snapshot processing failed\n" >&2; exit 1; }
+    xpuiCss="${xpuiDir}/xpui-snapshot.css"
+    xpuiJs="${xpuiSnapshotJs}"
+  }
+}
+
 xpui_open() {
+  mkdir -p "${xpuiDir}"
   unzip -qq "${xpuiSpa}" -d "${xpuiDir}"
+  snapshot_check
   [[ "${versionFailed}" && -z "${forceVer+x}" || -z "${forceVer+x}" && "${debug}" && "${devMode}" && "${t}" ]] && {
     clientVer=$(perl -ne '/[Vv]ersion[:=,\x22]{1,3}(1\.[0-9]+\.[0-9]+\.[0-9]+)\.g[0-9a-f]+/ && print "$1"' "${xpuiJs}")
     [[ -z "${clientVer}" && "${debug}" && "${devMode}" && "${t}" ]] && {
@@ -640,6 +657,7 @@ run_core_start() {
   xpui_detect
   [[ "${xpuiSkip}" ]] && { printf "\xE2\x9C\x94\x20\x46\x69\x6E\x69\x73\x68\x65\x64\n\n"; exit 1; }
   xpui_open
+  (($(ver "${clientVer}") > $(ver "1.2.56.9999"))) && vendorXpuiJs="${xpuiJs}"
 }
 
 run_patches() {
@@ -697,8 +715,8 @@ run_finish() {
   (cd "${xpuiDir}" || exit; zip -qq -r ../xpui.spa .)
   rm -rf "${xpuiDir}"
   [[ "${platformType}" == "macOS" ]] && {
-    [[ "${skipCodesign}" ]] && xattr -cr "${appPath}" 2>/dev/null || { 
-      xattr -cr "${appPath}" 2>/dev/null
+    [[ "${skipCodesign}" ]] && /usr/bin/xattr -cr "${appPath}" 2>/dev/null || { 
+      /usr/bin/xattr -cr "${appPath}" 2>/dev/null
       codesign -f --deep -s - "${appPath}" 2>/dev/null
       printf "\xE2\x9C\x94\x20\x43\x6F\x64\x65\x73\x69\x67\x6E\x65\x64\x20\x53\x70\x6F\x74\x69\x66\x79\n"
     }
@@ -708,7 +726,7 @@ run_finish() {
 perlVar="perl -0777pi -w -e"
 hideDLIcon=' .BKsbV2Xl786X9a09XROH {display:none}'
 hideDLMenu=' button.wC9sIed7pfp47wZbmU6m.pzkhLqffqF_4hucrVVQA {display:none}'
-hideDLMenu2=' .pzkhLqffqF_4hucrVVQA, .egE6UQjF_UUoCzvMxREj {display:none}'
+hideDLMenu2=' .pzkhLqffqF_4hucrVVQA, .egE6UQjF_UUoCzvMxREj, .Y98_oiegQgSpY_o7hoKG {display:none}'
 hideDLQual=' :is(.weV_qxFz4gF5sPotO10y, .BMtRRwqaJD_95vJFMFD0):has([for="desktop.settings.downloadQuality"]) {display: none}'
 hideSubfeed=' .cj6vRk3nFAi80HSVqX91 {display:none}'
 hideVeryHigh=' #desktop\.settings\.streamingQuality>option:nth-child(5) {display:none}'
@@ -717,9 +735,11 @@ updatesEx=(
 'blockUpdates&\x64(?=\x65\x73\x6B\x74\x6F\x70\x2D\x75\x70)&\x00&g&appBinary&1.1.70.610&9.9.9.9&macOS'
 )
 freeEx=(
-'adsB&/a\Kd(?=s/v1)|/a\Kd(?=s/v2/t)|/a\Kd(?=s/v2/se)&b&gs&appBinary'
-'adsX&/a\Kd(?=s/v1)|/a\Kd(?=s/v2/t)|/a\Kd(?=s/v2/se)&b&gs&xpuiJs'
+'adsB&/a\Kd(?=s/v1)|/a\Kd(?=s/v2/t)|/a\Kd(?=s/v2/se)&b&gs&appBinary&1.1.59.710&1.2.64.408'
+'adsX&/a\Kd(?=s/v1)|/a\Kd(?=s/v2/t)|/a\Kd(?=s/v2/se)&b&gs&xpuiJs&1.1.59.710&1.2.60.564'
+'adsX2&}/a\Kd(?=s)&b&gs&xpuiJs&1.2.55.235'
 'adsBillboard&.(?=\?\[.{1,6}[a-zA-Z].leaderboard,)&false&&xpuiJs&1.1.59.710&1.2.6.863'
+'adConfig&/\Kv2/config&config&gs&xpuiJs&1.2.55.235'
 'adsCosmos&(case .:|async enable\(.\)\{)(this.enabled=.+?\(.{1,3},"audio"\),|return this.enabled=...+?\(.{1,3},"audio"\))((;case 4:)?this.subscription=this.audioApi).+?this.onAdMessage\)&$1$3.cosmosConnector.increaseStreamTime(-100000000000)&&xpuiJs&1.1.59.710&1.1.92.647'
 'adsEmptyBlock&adsEnabled:!\K0&1&&xpuiJs'
 'connectOld1& connect-device-list-item--disabled&&&xpuiJs&1.1.70.610&1.1.90.859'
@@ -730,14 +750,20 @@ freeEx=(
 'esperantoProductState&(this\.(?:productStateApi|_product_state)(?:|_service)=(.))(?=}|(?:,.{1,30})?,this\.productStateApi|,this\._events)&$1,$2.putOverridesValues({pairs:{ads:'\''0'\'',catalogue:'\''premium'\'',type:'\''premium'\'',name:'\''Spotify'\''}})&&xpuiJs'
 'hideDlQual&(\(.,..jsxs\)\(.{1,3}|(.\(\).|..)createElement\(.{1,4}),\{(filterMatchQuery|filter:.,title|(variant:"viola",semanticColor:"textSubdued"|..:"span",variant:.{3,6}mesto,color:.{3,6}),htmlFor:"desktop.settings.downloadQuality.+?).{1,6}get\("desktop.settings.downloadQuality.title.+?(children:.{1,2}\(.,.\).+?,|\(.,.\){3,4},|,.\)}},.\(.,.\)\),)&&&xpuiJs&1.1.59.710&1.2.29.605'
 'hideUpgradeButton&(return|.=.=>)"free"===(.+?)(return|.=.=>)"premium"===&$1"premium"===$2$3"free"===&g&xpuiJs&1.1.59.710&1.1.92.647'
+'hideUpgradeButton2&"free"===&"premium"===&g&xpuiJs&1.2.55.235'
 'hptoEnabled&hptoEnabled:!\K0&1&s&xpuiJs'
 'hptoShown&isHptoShown:!\K0&1&gs&homeHptoJs&1.1.85.884&1.2.20.1218'
 'hptoShown2&(ADS_PREMIUM,isPremium:)\w(.*?ADS_HPTO_HIDDEN,isHptoHidden:)\w&$1true$2true&&xpuiJs&1.2.21.1104'
+'payloadS&\x3F\x70\x61\x79\x6C\x6F\x61\x64&\x00\x00\x00\x00\x00\x00\x00\x00&gs&appBinary&1.2.53.437'
+'stateS1&\x69\x6E\x69\x74\x69\x61\x6C\x5F(?=\x48)&\x00\x00\x00\x00\x00\x00\x00\x00&s&appBinary&1.2.53.437&1.2.55.235&macOS'
+'stateS2&\x69\x6E\x69\x74\x69\x61\x6C\x5F(?=\x48)&\x00\x00\x00\x00\x00\x00\x00\x00&s&appBinary&1.2.53.437&&Linux'
+'stateS3&[\x00\x0A\x1A]\K\x69\x6E\x69\x74\x69\x61\x6C\x5F(?=\x73\x74\x61\x74\x65\x00)&\x00\x00\x00\x00\x00\x00\x00\x00&s&appBinary&1.2.55.235&&macOS'
 )
 devEx=(
-'dev1&[\x00\xFF][\x00\xFF]\x48\xB8\x65\x76\x65.{5}\x48.{36,50}\K\xE8.{2}(?=\x00\x00)&\xB8\x03\x00&s&appBinary&1.1.84.716&&macOS|Linux&x86_64'
-'dev2&\xF8\xFF[\x37\x77\xB7\xF7][\x06-\x09]\x39\xFF.[\x00\x04]\xB9\xE1[\x03\x43\x83\xC3][\x06-\x09]\x91\xE2.[\x02\x03\x13]\x91.{0,4}\K..\x00\x94(?=[\xF7\xF8]\x03)&\x60\x00\x80\xD2&s&appBinary&1.1.84.716&&macOS'
-'devDebug&(return ).{1,3}(\?(?:.{1,4}createElement|\(.{1,7}.jsxs\)))(\(.{3,7}\{displayText:"Debug Tools"(?:,children.{3,8}jsx\)|},.\.createElement))(\(.{4,6}role.*?Debug Window".*?\))(.*?Locales.{3,8})(:null)&$1true$2$4$6&&xpuiJs&1.1.92.644'
+'dev1&[\x00\xFF][\x00\xFF]\x48\xB8\x65\x76\x65.{5}\x48.{36,50}\K\xE8.{4}&\xB8\x03\x00\x00\x00&s&appBinary&1.1.84.716'
+'dev2&\xF8\xFF[\x37\x77\xB7\xF7][\x06-\x0F\x10\x11]\x39\xFF.[\x00-\x04]\xB9\xE1[\x03\x43\x83\xC3][\x06-\x0F\x10\x11]\x91\xE2.[\x02\x03\x06\x07\x0A\x13]\x91.{0,4}\K...[\x94\x97](?=[\xF5\xF7\xF8]\x03)&\x60\x00\x80\xD2&s&appBinary&1.1.84.716&&macOS'
+'devDebug&(return ).{1,3}(\?(?:.{1,4}createElement|\(.{1,7}.jsxs\)))(\(.{3,7}\{displayText:"Debug Tools"(?:,children.{3,8}jsx\)|},.\.createElement))(\(.{4,6}role.*?Debug Window".*?\))(.*?Locales.{3,8})(:null)&$1true$2$4$6&&xpuiJs&1.1.92.644&1.2.59.518'
+'enableDebugTools&debug tools and features for employees",default:\K!1&true&s&xpuiJs&1.2.60.564'
 )
 oldUiEx=(
 'disableYLXSidebar&Enable Your Library X view of the left sidebar",default:\K!.(?=})&false&s&xpuiJs&1.1.93.896&1.2.13.661'
@@ -752,9 +778,8 @@ newUiEx=(
 'enableYLXSidebar&Enable Your Library X view of the left sidebar",default:\K!1&true&s&xpuiJs&1.1.97.962&1.2.13.661'
 )
 podEx=(
-'hidePodcasts&withQueryParameters\(.\)\{return this.queryParameters=.,this}&withQueryParameters(e){return this.queryParameters=(e.types?{...e, types: e.types.split(",").filter(_ => !["episode","show"].includes(_)).join(",")}:e),this}&&xpuiJs&1.1.70.610&1.1.92.647'
-'hidePodcasts2&(!?Array.isArray\(.\)[|\x26]{2}.===(.).length\)return null;)&$1let sx=$2;if(!Array.isArray(sx)){sx=e;}for(let q=0;q<(sx.children?sx.children.length:sx.length);q++){const item=sx.children?sx.children\[q\]:sx\[q\];const key=item?.key;const props=item?.props;const uri=props?.uri;if(!key||props?.value==="search-history")continue;if(key.match(/(episode|show)/)||(props?.name||'\'''\'').match(/podcasts/i)||(uri||'\'''\'').match(/(episode|show)/))return null;};&&xpuiJs&1.1.93.896&1.2.43.420'
-'hidePodcasts3&case"EpisodeOrChapterResponseWrapper":case"PlaylistResponseWrapper":case"PodcastOrAudiobookResponseWrapper":&case"PlaylistResponseWrapper":&s&xpuiJs&1.2.44.405'
+'hidePodcasts&withQueryParameters\(.\)\{return this.queryParameters=.,this}&withQueryParameters(e){return this.queryParameters=(e.types?{...e, types: e.types.split(",").filter(_ => !["episode","show"].includes(_)).join(",")}:e),this}&&xpuiJs&1.1.70.610&1.1.85.895'
+'hidePodcasts2&(case 6:|const .=await .\([^\)]*\);)((return .\.abrupt\(\"|return[ \"],?)(null!=n\x26\x26|return\",)?(.)(\);case 9|\??.errors\?.*?Promise.reject.+?errors\)+:.))&$1$5?.data?.home?.sectionContainer?.sections?.items?.forEach(x => x?.sectionItems?.items \x26\x26 (x.sectionItems.items = x.sectionItems.items.filter(i => !['\''Podcast'\'','\''Audiobook'\'','\''Episode'\''].includes(i?.content?.data?.__typename))));$2&&xpuiJs&1.1.86.857'
 )
 lyricsBgEx=(
 'lyricsBackground1&--lyrics-color-inactive":\K(.).inactive&$1.background&&xpuiJs&1.2.0.1165&1.2.44.405'
@@ -768,21 +793,27 @@ aoEx=(
 'betamaxFilterNegativeDuration&for duration that is negative",default:\K!.(?=})&false&s&xpuiJs'
 'bGabo&\x00\K\x67(?=\x61\x62\x6F\x2D\x72\x65\x63\x65\x69\x76\x65\x72\x2D\x73\x65\x72\x76\x69\x63\x65)&\x00&g&appBinary&1.1.84.716'
 'bLogic&\x00\K\x61(?=\x64\x2D\x6C\x6F\x67\x69\x63\x2F\x73)&\x00&&appBinary&1.1.70.610&1.2.28.581'
-'bSlot&\x00\K\x73(?=\x6C\x6F\x74\x73\x00)&\x00&&appBinary&1.1.70.610'
+'bSlot&\x00\K\x73(?=\x6C\x6F\x74\x73\x00)&\x00&g&appBinary&1.1.70.610'
 'disablePremiumOnlyModal&Disable the Premium Only Modal",default:\K!.(?=})&true&s&xpuiJs&1.2.39.578'
 'enableCanvasAds&Enable Canvas for ads",default:\K!.(?=})&false&s&xpuiJs&1.2.52.442'
+'enableConnectedStateObserver&observer that logs errors related to connected state and ad info",default:\K!.(?=})&false&s&xpuiJs&1.2.53.437'
 'enableCulturalMoments&Cultural Moment pagess",default:\K!.(?=})&false&s&xpuiJs&1.2.7.1264&1.2.50.335'
 'enableDesktopMusicLeavebehinds&Enable music leavebehinds on eligible playlists for desktop",default:\K!.(?=})&false&s&xpuiJs&1.2.10.751'
-'enableDsaAds&Enable showing DSA .Digital Services Act. context menu and modal for ads",default:\K!.(?=})&false&s&xpuiJs&1.2.20.1210'
+'enableDsaAds&Enable showing DSA .Digital Services Act. context menu and modal for ads",default:\K!.(?=})&false&s&xpuiJs&1.2.20.1210&1.2.52.442'
 'enableDSASetting&Enable DSA .Digital Service Act. features for desktop and web",default:\K!.(?=})&false&s&xpuiJs&1.2.20.1210'
+'enableEnhancedAdsClientDeconfliction&Enable refactored version of ads orchestrator middleware",default:\K!.(?=})&false&s&xpuiJs&1.2.57.460&1.2.61.443'
+'enableEmbeddedAdsFetchingOverCanvas&embedded ads fetching when canvas track is playing. Defaults to true since this is currently existing behavior",default:\K!.(?=})&false&s&xpuiJs&1.2.72.435'
+'enableEmbeddedAdVisibilityLogging&When enabled, enhanced visibility logs will be sent for embedded ads",default:\K!.(?=})&false&s&xpuiJs&1.2.64.407'
+'enableEmbeddedNpvAds&Enable embedded display ads on NPV",default:\K!.(?=})&false&s&xpuiJs&1.2.57.460'
 'enableEsperantoMigration&Enable esperanto Migration for (HPTO\s)?Ad Formats?",default:\K!.(?=})&false&s&xpuiJs&1.2.6.861&1.2.50.335'
 'enableEsperantoMigrationLeaderboard&Enable esperanto Migration for Leaderboard Ad Format",default:\K!.(?=})&false&s&xpuiJs&1.2.32.985'
-'enableFraudLoadSignals&Enable user fraud signals emitted on page load",default:\K!.(?=})&false&s&xpuiJs&1.2.22.975'
+'enableFraudLoadSignals&Enable user fraud signals emitted on page load",default:\K!.(?=})&false&s&xpuiJs&1.2.22.975&1.2.62.580'
 'enableHomeAds&Enable Fist Impression Takeover ads on Home Page",default:\K!.(?=})&false&s&xpuiJs&1.2.31.1205'
-'enableHomeAdStaticBanner&Enables temporary home banner, static version",default:\K!.(?=})&false&s&xpuiJs&1.2.25.1009'
+'enableHomeAdStaticBanner&Enables temporary home banner, static version",default:\K!.(?=})&false&s&xpuiJs&1.2.25.1009&1.2.53.440'
+'enableHpto&Hpto announcements on Home",default:\K!.(?=})&false&s&xpuiJs&1.2.65.255'
 'enableHptoLocationRefactor&Enable new permanent location for HPTO iframe to HptoHtml.js",default:\K!.(?=})&false&s&xpuiJs&1.2.1.958&1.2.20.1218'
 'enableInAppMessaging&Enables quicksilver in-app messaging modal",default:\K!.(?=})&false&s&xpuiJs&1.1.70.610'
-'enableInteractionLogger&Enables the old interaction logger",default:\K!.(?=})&false&s&xpuiJs&1.2.41.434'
+'enableInteractionLogger&Enables the old interaction logger",default:\K!.(?=})&false&s&xpuiJs&1.2.41.434&1.2.64.408'
 'enableLeavebehindsMockData&Use the mock endpoint to fetch Leavebehinds from AP4P",default:\K!.(?=})&false&s&xpuiJs&1.2.30.1135'
 'enableNewAdsNpv&Enable showing new ads NPV",default:\K!.(?=})&false&s&xpuiJs&1.2.18.997&1.2.50.335'
 'enableNewAdsNpvCanvasAds&Enable Canvas ads for new ads NPV",default:\K!.(?=})&false&s&xpuiJs&1.2.28.581&1.2.51.345'
@@ -794,29 +825,33 @@ aoEx=(
 'enablePipImpressionLogging&Enables impression logging for PiP",default:\K!.(?=})&false&s&xpuiJs&1.2.32.985'
 'enablePodcastSponsoredContent&Enable sponsored content information for podcasts",default:\K!.(?=})&false&s&xpuiJs&1.2.30.1135&1.2.50.335'
 'enablePromotions&Enables promotions on home",default:\K!.(?=})&false&s&xpuiJs&1.2.38.720&1.2.45.454'
+'enableSaxLeaderboardAds&Enable SAX Leaderboard Ad Format",default:\K!.(?=})&false&s&xpuiJs&1.2.62.575'
 'enableShowLeavebehindConsolidation&Enable show leavebehinds consolidated experience",default:\K!.(?=})&false&s&xpuiJs&1.2.23.1114'
 'enableSponsoredPlaylistEsperantoMigration&Enable esperanto Migration for Sponsored Playlist Ad Formats",default:\K!.(?=})&false&s&xpuiJs&1.2.32.985&1.2.50.335'
-'enableSurveyAds&Enable Spotify Brand Lift .SBL. Surveys in the NPV",default:\K!.(?=})&false&s&xpuiJs&1.2.43.420'
-'enableUserFraudCanvas&Enable user fraud Canvas Fingerprinting",default:\K!.(?=})&false&s&xpuiJs&1.2.13.656'
-'enableUserFraudCspViolation&Enable CSP violation detection",default:\K!.(?=})&false&s&xpuiJs&1.2.17.832'
-'enableUserFraudSignals&Enable user fraud signals",default:\K!.(?=})&false&s&xpuiJs&1.2.10.751'
-'enableUserFraudVerification&Enable user fraud verification",default:\K!.(?=})&false&s&xpuiJs&1.2.3.1107'
-'enableUserFraudVerificationRequest&Enable the IAV component make api requests",default:\K!.(?=})&false&s&xpuiJs&1.2.5.954'
-'enableYourListeningUpsell&Enable Your Listening Upsell Banner for free . unauth users",default:\K!.(?=})&false&s&xpuiJs&1.2.25.1009'
+'enableSurveyAds&Enable Spotify Brand Lift .SBL. Surveys in the NPV",default:\K!.(?=})&false&s&xpuiJs&1.2.43.420&1.2.63.394'
+'enableUserFraudCanvas&Enable user fraud Canvas Fingerprinting",default:\K!.(?=})&false&s&xpuiJs&1.2.13.656&1.2.63.394'
+'enableUserFraudCspViolation&Enable CSP violation detection",default:\K!.(?=})&false&s&xpuiJs&1.2.17.832&1.2.62.580'
+'enableUserFraudSignals&Enable user fraud signals",default:\K!.(?=})&false&s&xpuiJs&1.2.10.751&1.2.62.580'
+'enableUserFraudVerification&Enable user fraud verification",default:\K!.(?=})&false&s&xpuiJs&1.2.3.1107&1.2.62.580'
+'enableUserFraudVerificationRequest&Enable the IAV component make api requests",default:\K!.(?=})&false&s&xpuiJs&1.2.5.954&1.2.62.580'
+'enableYourListeningUpsell&Enable Your Listening Upsell Banner for free . unauth users",default:\K!.(?=})&false&s&xpuiJs&1.2.25.1009&1.2.63.394'
 'hideUpgradeCTA&Hide the Upgrade CTA button on the Top Bar",default:\K!.(?=})&true&s&xpuiJs&1.2.26.1180'
 'logSentry&(this\.getStackTop\(\)\.client=.)&return;$1&&vendorXpuiJs&1.1.70.610&1.2.29.605'
 'logSentry2&sentry\.io&localhost.io&&xpuiJs&1.1.70.610'
 'lUnsupported&((?:\(?await )?.\.build.{20,60}encodeURIComponent.{20,140}"\/track\/\{trackId\}.+?)(.send)&$1.withHeaders([{key:"spotify-app-version",value:"1.2.45.454"}])$2&s&xpuiJs&1.1.70.610&1.2.45.451'
 'logV3&sp://logging/v3/\w+&&g&xpuiJs&1.1.70.610'
-'re1&\xE8...\xFF\x4D\x8B.{1,2}\x4D\x85.\x75[\xA0-\xAF]\x48\x8D.{9,10}\K\xE8...\xFF(?=[\x40-\x4F][\x80-\x8F])&\x0F\x1F\x44\x00\x00&gs&appBinary&1.2.29.605&&Linux&x86_64&2'
-'re2&\x24\x24\x4D\x85\xE4\x75\xA9\x48\x8D\x35...\x01\x48\x8D\xBD.[\xFE\xFF]\xFF\xFF\K\xE8....&\x0F\x1F\x44\x00\x00&gs&appBinary&1.2.29.605&&macOS&x86_64&2'
+'re1&\xE8...\xFF\x4D\x8B.{1,2}\x4D\x85.\x75[\xA0-\xAF]\x48\x8D.{9,10}\K\xE8...\xFF(?=[\x40-\x4F][\x80-\x8F])&\x0F\x1F\x44\x00\x00&gs&appBinary&1.2.29.605&&Linux&&2'
+'re2&\x24\x24\x4D\x85\xE4\x75\xA9\x48\x8D\x35...\x01\x48\x8D\xBD.[\xFE\xFF]\xFF\xFF\K\xE8....&\x0F\x1F\x44\x00\x00&gs&appBinary&1.2.29.605&&macOS&&2'
 're3&[\x10-\x1F]\x01\x00\x39\xE0\x03[\x10-\x1F]\xAA...[\x90-\x9F].\x02\x40\xF9[\x70-\x7F]\xFD\xFF\xB5..\x00.\x21..\x91\xE0.[\x00-\x0F]\x91\K....(?=[\xF0-\xFF][\x00-\x0F]....\x00)&\x1F\x20\x03\xD5&gs&appBinary&1.2.29.605&&macOS&&2'
+'searchFix1&(typeName])&$1 || []&s&xpuiJs&1.2.28.581&1.2.57.463'
 'slotMid&\x70\x6F\x64\x63\x61\x73\x74\K\x2D\x6D\x69&\x20\x6D\x69&g&appBinary&1.0.29.605&1.0.29.605&macOS'
 'slotPost&\x70\x6F\x64\x63\x61\x73\x74\K\x2D\x70\x6F&\x20\x70\x6F&g&appBinary&1.0.29.605&1.0.29.605&macOS'
 'slotPre&\x2D(?=\x70\x72\x65\x72\x6F\x6C\x6C)&\x20&g&appBinary&1.0.29.605&1.0.29.605&macOS'
-'sponsors1&ht.{14}\...\..{7}\....\/.{8}ap4p\/&&g&xpuiJs&1.1.70.610'
-'sponsors2&ht.{14}\...\..{7}\....\/s.{15}t\/v.\/&&g&xpuiJs&1.1.70.610'
+'sponsors1&ht.{14}\...\..{7}\....\/.{8}ap4p\/&&g&xpuiJs&1.1.70.610&1.2.52.442'
+'sponsors2&ht.{14}\...\..{7}\....\/s.{15}t\/v.\/&&g&xpuiJs&1.1.70.610&1.2.60.564'
 'sponsors3&allSponsorships&&g&xpuiJs&1.1.59.710'
+'sponsors4&\/\K.{7}-ap4p&&g&xpuiJs&1.2.53.437'
+'ucsC&\x00\K\x68(?=.{30}\x2F\x75\x73\x65\x72\x2D)&\x00&s&appBinary&1.2.55.235'
 'webgateGabo&\@webgate\/(gabo)&"@" . $1&ge&vendorXpuiJs&1.1.70.610'
 'webgateRemote&\@webgate\/(remote)&"@" . $1&ge&vendorXpuiJs&1.1.70.610'
 )
@@ -827,6 +862,7 @@ expEx=(
 'enableAlbumPrerelease&album prerelease pages",default:\K!.(?=})&true&s&xpuiJs&1.2.18.997&1.2.50.335'
 'enableAlbumReleaseAnniversaries&balloons on album release date anniversaries",default:\K!1&true&s&xpuiJs&1.1.89.854'
 'enableAlignedCuration&Aligned Curation",default:\K!.(?=})&false&s&xpuiJs&1.2.21.1104&1.2.50.335'
+'enableAlignedPanelHeaders&aligned panel headers",default:\K!1&true&s&xpuiJs&1.2.57.460&1.2.62.580'
 'enableAnonymousVideoPlayback&anonymous users to play video podcasts",default:\K!1&true&s&xpuiJs&1.2.29.605'
 'enableArtistBans&feature to ban/unban artists and have the UI reflect it",default:\K!.(?=})&true&s&xpuiJs&1.2.43.420&1.2.50.335'
 'enableArtistLikedSongs&Liked Songs section on Artist page",default:\K!1&true&s&xpuiJs&1.1.59.710&1.2.17.834'
@@ -834,37 +870,43 @@ expEx=(
 'enableAudiobookPrerelease&audiobook prerelease pages",default:\K!1&true&s&xpuiJs&1.2.33.1039&1.2.47.366'
 'enableAudiobooks&Audiobooks feature on ClientX",default:\K!1&true&s&xpuiJs&1.1.74.631&1.2.46.462'
 'enableAutoSeekToVideoBufferedStartPosition&avoid initial seek if the initial position is not buffered",default:\K!1&true&s&xpuiJs&1.2.31.1205'
+'enableBackendSearchHistory&Enable backend search history",default:\K!1&true&s&xpuiJs&1.2.60.564'
 'enableBanArtistAction&context menu action to ban/unban artists",default:\K!1&true&s&xpuiJs&1.2.28.581&1.2.42.290'
 'enableBetamaxSdkSubtitlesDesktopX&rendering subtitles on the betamax SDK on DesktopX",default:\K!.(?=})&true&s&xpuiJs&1.1.70.610'
-'enableBillboardEsperantoMigration&esperanto migration for Billboard Ad Format",default:\K!.(?=})&true&s&xpuiJs&1.2.32.985'
+'enableBillboardEsperantoMigration&esperanto migration for Billboard Ad Format",default:\K!.(?=})&true&s&xpuiJs&1.2.32.985&1.2.52.442'
 'enableBlockUsers&block users feature in clientX",default:\K!.(?=})&true&s&xpuiJs&1.1.70.610&1.2.50.335'
 'enableBrowseViaPathfinder&Fetch Browse data from Pathfinder",default:\K!1&true&s&xpuiJs&1.1.88.595&1.2.24.756'
-'enableCanvasNpv&short, looping visuals on tracks.",default:..\.\KCONTROL&CANVAS_PLAY_LOOP&s&xpuiJs&1.2.33.1039'
+'enableCanvasNpv&short, looping visuals on tracks.",default:..\.\KCONTROL&CANVAS_PLAY_LOOP&s&xpuiJs&1.2.33.1039&1.2.62.580'
 'enableCarouselsOnHome&Use carousels on Home",default:\K!1&true&s&xpuiJs&1.1.93.896&1.2.25.1011'
 'enableCenteredLayout&Enable centered layout",default:\K!.(?=})&true&s&xpuiJs&1.2.39.578&1.2.50.335'
 'enableClearAllDownloads&option in settings to clear all downloads",default:\K!1&true&s&xpuiJs&1.1.92.644&1.1.98.691'
+'enableCommentThreadsReactionsForEpisodes&users to react and reply to comments.",default:\K!1&true&s&xpuiJs&1.2.71.421'
 'enableConcertEntityPathfinderDWP&Use pathfinder for the concert entity page on DWP",default:\K!1&true&s&xpuiJs&1.2.25.1009&1.2.33.1039'
-'enableConcertGenres&concert genres on the live events feed",default:\K!1&true&s&xpuiJs&1.2.46.462'
-'enableConcertsCarouselForThisIsPlaylist&Concerts Carousel on This is Playlist",default:\K!1&true&s&xpuiJs&1.2.26.1180'
-'enableConcertsForThisIsPlaylist&Tour Card on This is Playlist",default:\K!1&true&s&xpuiJs&1.2.11.911'
+'enableConcertGenres&concert genres on the live events feed",default:\K!1&true&s&xpuiJs&1.2.46.462&1.2.58.498'
+'enableConcertsCarouselForThisIsPlaylist&Concerts Carousel on This is Playlist",default:\K!1&true&s&xpuiJs&1.2.26.1180&1.2.63.394'
+'enableConcertsForThisIsPlaylist&Tour Card on This is Playlist",default:\K!1&true&s&xpuiJs&1.2.11.911&1.2.62.580'
 'enableConcertsInSearch&concerts in search",default:\K!1&true&s&xpuiJs&1.2.33.1039'
-'enableConcertsInterested&Save . Retrieve feature for concerts",default:\K!1&true&s&xpuiJs&1.2.7.1264'
+'enableConcertsInterested&Save . Retrieve feature for concerts",default:\K!1&true&s&xpuiJs&1.2.7.1264&1.2.62.580'
 'enableConcertsNearYou&Concerts Near You Playlist",default:\K!1&true&s&xpuiJs&1.2.11.911'
-'enableConcertsNearYouFeedPromoDWP&Show the promo card for Concerts Near You playlist on Concert Feed",default:\K!1&true&s&xpuiJs&1.2.23.1114'
-'enableConcertsTicketPrice&Display ticket price on Event page",default:\K!1&true&s&xpuiJs&1.2.15.826'
+'enableConcertsNearYouFeedPromoDWP&Show the promo card for Concerts Near You playlist on Concert Feed",default:\K!1&true&s&xpuiJs&1.2.23.1114&1.2.57.463'
+'enableConcertsNotInterested&ser to set not interested on concerts",default:\K!1&true&s&xpuiJs&1.2.53.437'
+'enableConcertsTicketPrice&Display ticket price on Event page",default:\K!1&true&s&xpuiJs&1.2.15.826&1.2.62.580'
+'enableContextMenuShortcuts&inline keyboard shortcuts for common context menu items",default:\K!1&true&s&xpuiJs&1.2.69.448'
 'enableContextualTrackBans&ability to ban.hide tracks from eligible contexts",default:\K!1&true&s&xpuiJs&1.2.52.442'
+'enableCreateButton&create button either in the global navbar or in YLX",values:.{1,3},default:.{1,3}.\KNONE&YOUR_LIBRARY&s&xpuiJs&1.2.57.460'
 'enableDiscographyShelf&condensed disography shelf on artist pages",default:\K!.(?=})&true&s&xpuiJs&1.1.79.763&1.2.50.335'
-'enableDynamicNormalizer&dynamic normalizer.compressor",default:\K!1&true&s&xpuiJs&1.2.14.1141'
+'enableDynamicNormalizer&dynamic normalizer.compressor",default:\K!1&true&s&xpuiJs&1.2.14.1141&1.2.60.564'
 'enableEightShortcuts&Increase max number of shortcuts on home to 8",default:\K!1&true&s&xpuiJs&1.2.26.1180&1.2.45.454'
 'enableEncoreCards&all cards throughout app to be Encore Cards",default:\K!1&true&s&xpuiJs&1.2.21.1104&1.2.33.1042'
 'enableEncorePlaybackButtons&Use Encore components in playback control components",default:\K!1&true&s&xpuiJs&1.2.20.1210&1.2.43.420'
 'enableEqualizer&audio equalizer for Desktop and Web Player",default:\K!1&true&s&xpuiJs&1.1.88.595'
-'enableExtraTracklistColumns&extra tracklist columns",default:\K!1&true&s&xpuiJs&1.2.44.405'
-'enableFC24EasterEgg&EA FC 24 easter egg",default:\K!1&true&s&xpuiJs&1.2.20.1210'
+'enableExtraTracklistColumns&extra tracklist columns",default:\K!1&true&s&xpuiJs&1.2.44.405&1.2.71.421'
+'enableFC24EasterEgg&EA FC 24 easter egg",default:\K!1&true&s&xpuiJs&1.2.20.1210&1.2.53.440'
 'enableForgetDevice&option to Forget Devices",default:\K!1&true&s&xpuiJs&1.2.0.1155&1.2.5.1006'
 'enableFullscreenMode&Enable fullscreen mode",default:\K!1&true&s&xpuiJs&1.2.31.1205'
+'enableGlobalCreateButton&plus button for creating different types of playlists from global nav bar",default:\K!1&true&s&xpuiJs&1.2.53.437&1.2.56.502'
 'enableGlobalNavBar&Show global nav bar with home button, search input and user avatar",default:..\.\KCONTROL&HOME_NEXT_TO_SEARCH&s&xpuiJs&1.2.30.1135&1.2.45.454'
-'enableHomeCarousels&carousels on home",default:\K!1&true&s&xpuiJs&1.2.44.405'
+'enableHomeCarousels&carousels on home",default:\K!1&true&s&xpuiJs&1.2.44.405&1.2.62.580'
 'enableHomePin&pinning of home shelves",default:\K!1&true&s&xpuiJs&1.2.45.451'
 'enableIgnoreInRecommendations&Ignore In Recommendations for desktop and web",default:\K!.(?=})&true&s&xpuiJs&1.1.87.612&1.2.50.335'
 'enableInlineCuration&new inline playlist curation tools",default:\K!1&true&s&xpuiJs&1.1.70.610&1.2.25.1011'
@@ -875,6 +917,7 @@ expEx=(
 'enableLyricsCheck&clients will check whether tracks have lyrics available",default:\K!1&true&s&xpuiJs&1.1.70.610&1.1.93.896'
 'enableLyricsMatch&Lyrics match labels in search results",default:\K!.(?=})&true&s&xpuiJs&1.1.87.612&1.2.50.335'
 'enableLyricsNew&new fullscreen lyrics page",default:\K!1&true&s&xpuiJs&1.1.84.716&1.1.86.857'
+'enableLyricsScrollToCurrentLineButton&scroll to current line button in lyrics",default:\K!1&true&s&xpuiJs&1.2.65.255'
 'enableMadeForYouEntryPoint&Show "Made For You" entry point in the left sidebar.,default:\K!1&true&s&xpuiJs&1.1.70.610&1.1.95.893'
 'enableMarkBookAsFinished&ability to mark a book as finished",default:\K!1&true&s&xpuiJs&1.2.44.405'
 'enableMerchHubWrappedTakeover&Route merchhub url to the new genre page for the wrapped takeover",default:\K!1&true&s&xpuiJs&1.2.22.975&1.2.39.578'
@@ -884,17 +927,21 @@ expEx=(
 'enableNewConcertFeed&Enables new concert feed experience",default:\K!1&true&s&xpuiJs&1.2.37.701&1.2.42.290&1.2.50.335'
 'enableNewConcertLocationExperience&new concert location experience modal selector.",default:\K!1&true&s&xpuiJs&1.2.34.783&1.2.42.290'
 'enableNewEntityHeaders&New Entity Headers",default:\K!1&true&s&xpuiJs&1.2.15.826&1.2.28.0'
-'enableNewEpisodes&new episodes view",default:\K!1&true&s&xpuiJs&1.1.84.716'
+'enableNewEpisodes&new episodes view",default:\K!1&true&s&xpuiJs&1.1.84.716&1.2.62.580'
+#'enableNewOverlayScrollbars&new overlay scrollbars",default:\K!1&true&s&xpuiJs&1.2.58.492'
 'enableNewPodcastTranscripts&showing podcast transcripts on desktop and web player",default:\K!1&true&s&xpuiJs&1.1.84.716&1.2.25.1011'
 'enableNextBestEpisode&next best episode block on the show page",default:\K!1&true&s&xpuiJs&1.1.99.871&1.2.28.581'
-'enableNotificationCenter&notification center for desktop . web",default:\K!1&true&s&xpuiJs&1.2.39.578'
+#'enableNotificationCenter&notification center for desktop . web",default:\K!1&true&s&xpuiJs&1.2.39.578'
 'enableNowPlayingBarVideo&showing video in Now Playing Bar when all other video elements are closed",default:\K!1&true&s&xpuiJs&1.2.22.975'
 'enableNowPlayingBarVideoSwitch&a switch to toggle video in the Now Playing Bar",default:\K!1&true&s&xpuiJs&1.2.28.581&1.2.29.605'
 'enableNPVCredits enableNPVCreditsWithLinkability&credits in the right sidebar",default:\K!.(?=})&true&gs&xpuiJs&1.2.26.1180&1.2.50.335'
 'enableOtfn&On-The-Fly-Normalization",default:\K!1&true&s&xpuiJs&1.2.31.1205'
 'enableOverlaySidebarAnimations&Enable entry and exit animations for the overlay panels .queue, device picker, buddy feed.... in the side bar",default:\K!1&true&s&xpuiJs&1.2.38.720&1.2.45.454'
-'enablePiPMiniPlayer&the PiP Mini Player",default:\K!1&true&s&xpuiJs&1.2.32.985'
-'enablePiPMiniPlayerVideo&playback of video inside the PiP Mini Player",default:\K!1&true&s&xpuiJs&1.2.32.985'
+'enablePeekNpv&the Peek NPV feature",default:\K!1&true&s&xpuiJs&1.2.53.437'
+'enablePiPMiniPlayer&the PiP Mini Player",default:\K!.(?=})&true&s&xpuiJs&1.2.32.985'
+'enablePiPMiniPlayerQueue&PiP Queue behind miniplayer settings",default:\K!1&true&s&xpuiJs&1.2.67.553'
+'enablePiPMiniPlayerSettings&PiP settings",default:\K!1&true&s&xpuiJs&1.2.65.255'
+'enablePiPMiniPlayerVideo&playback of video inside the PiP Mini Player",default:\K!.(?=})&true&s&xpuiJs&1.2.32.985'
 'enablePlaybackBarAnimation&animation of the playback bar",default:\K!1&true&s&xpuiJs&1.2.34.783'
 'enablePlaylistCreationFlow&new playlist creation flow in Web Player and DesktopX",default:\K!1&true&s&xpuiJs&1.1.70.610&1.1.93.896'
 'enablePlaylistPermissionsProd&Playlist Permissions flows for Prod",default:\K!.(?=})&true&s&xpuiJs&1.1.75.572&1.2.50.335'
@@ -902,28 +949,31 @@ expEx=(
 'enablePodcastDescriptionAutomaticLinkification&Linkifies anything looking like a url in a podcast description.",default:\K!1&true&s&xpuiJs&1.2.19.937'
 'enablePremiumUserForMiniPlayer&premium user flag for mini player",default:\K!1&true&s&xpuiJs&1.2.32.985'
 'enablePrereleaseRadar&Show a curated list of upcoming albums to a user",default:\K!1&true&s&xpuiJs&1.2.39.578&1.2.45.454'
-'enableQueueOnRightPanel&Enable Queue on the right panel.",default:\K!.(?=})&true&s&xpuiJs&1.2.26.1180'
+'enableProgressBarEpisodeChapters&pisode chapters markers in the progress bar",default:\K!1&true&s&xpuiJs&1.2.68.525'
+'enableQueueOnRightPanel&Enable Queue on the right panel.",default:\K!.(?=})&true&s&xpuiJs&1.2.26.1180&1.2.61.443'
 'enableQueueOnRightPanelAnimations&animations for Queue on the right panel.",default:\K!.(?=})&true&s&xpuiJs&1.2.32.985&1.2.50.335'
 'enableReactQueryPersistence&React Query persistence",default:\K!.(?=})&true&s&xpuiJs&1.2.30.1135'
-'enableReadAlongTranscripts&read along transcripts in the NPV",default:\K!.(?=})&true&s&xpuiJs&1.2.17.832'
+'enableReadAlongTranscripts&read along transcripts in the NPV",default:\K!.(?=})&true&s&xpuiJs&1.2.17.832&1.2.62.580'
 'enableRecentlyPlayedShortcut&Show Recently Played shortcut in home view. Also increase max number of shortcuts to 8",default:\K!1&true&s&xpuiJs&1.2.21.1104&1.2.25.1011'
-'enableRecentSearchesDropdown&recent searches dropdown in GlobalNavBar",default:\K!1&true&s&xpuiJs&1.2.45.451'
+'enableRecentSearchesDropdown&recent searches dropdown in GlobalNavBar",default:\K!1&true&s&xpuiJs&1.2.45.451&1.2.52.442'
 'enableRelatedVideos&Related Video section in NPV",default:\K!1&true&s&xpuiJs&1.2.21.1104'
-'enableResizableTracklistColumns&resizable tracklist columns",default:\K!1&true&s&xpuiJs&1.2.28.581'
+'enableResizableTracklistColumns&resizable tracklist columns",default:\K!1&true&s&xpuiJs&1.2.28.581&1.2.66.447'
 'enableRightSidebarArtistEnhanced&Enable Artist about V2 section in NPV",default:\K!.(?=})&true&s&xpuiJs&1.2.16.947&1.2.50.335'
 'enableRightSidebarCollapsible&right sidebar to collapse into the right margin",default:\K!1&true&s&xpuiJs&1.2.34.783&1.2.37.701'
 'enableRightSidebarCredits&Show credits in the right sidebar",default:\K!1&true&s&xpuiJs&1.2.7.1264&1.2.25.1011'
 'enableRightSidebarMerchFallback&Allow merch to fallback to artist level merch if track level does not exist",default:\K!1&true&s&xpuiJs&1.2.5.954&1.2.11.916'
 'enableRightSidebarTransitionAnimations&Enable the slide-in.out transition on the right sidebar",default:\K!1&true&s&xpuiJs&1.2.7.1264&1.2.33.1042'
 'enableSearchBox&filter playlists when trying to add songs to a playlist using the contextmenu",default:\K!1&true&s&xpuiJs&1.1.86.857&1.1.93.896'
+'enableSearchSuggestions&the search suggestions dropdown",default:\K!1&true&s&xpuiJs&1.2.72.435'
 'enableSearchV3&new Search experience",default:\K!1&true&s&xpuiJs&1.1.87.612&1.2.34.783'
 'enableScrollDrivenAnimations&croll driven animations for cards and shelved",default:\K!1&true&s&xpuiJs&1.2.39.578'
 'enableSharingButtonOnMiniPlayer&sharing button on MiniPlayer .this also moves the ... icon close to the title.",default:\K!1&true&s&xpuiJs&1.2.39.578&1.2.43.420'
 'enableShortLinks&short links for sharing",default:\K!1&true&s&xpuiJs&1.2.34.783'
 'enableShowFollowsSetting&control if followers and following lists are shown on profile",default:\K!.(?=})&true&s&xpuiJs&1.2.1.958&1.2.50.335'
-'enableShowRating&new UI for rating books and podcasts",default:\K!1&true&s&xpuiJs&1.2.32.985'
+'enableShowRating&new UI for rating books and podcasts",default:\K!1&true&s&xpuiJs&1.2.32.985&1.2.62.580'
 'enableSidebarAnimations&animations on the left and right on the sidebars and makes the right sidebar collapsible",default:\K!1&true&s&xpuiJs&1.2.34.783&1.2.37.701'
 'enableSilenceTrimmer&silence trimming in podcasts",default:\K!1&true&s&xpuiJs&1.1.99.871'
+'enableSkipNextTooltip&tooltip that shows a preview of the next item in queue.",values:.{1,3},default:.{1,4}\KDisabled&Expanded&s&xpuiJs&1.2.65.255'
 'enableSocialConnectOnDesktop&the Social Connect API that powers group listening sessions for Desktop",values:.{1,3},default:.{1,4}\KDISABLED&ENABLED&s&xpuiJs&1.2.21.1104&1.2.45.454'
 'enableSmallerLineHeight&line height 1.5 on the .body ..",default:\K!1&true&s&xpuiJs&1.2.18.997&1.2.23.1125'
 'enableSmallPlaybackSpeedIncrements&playback speed range from 0.5-3.5 with every 0.1 increment",default:\K!1&true&s&xpuiJs&1.2.0.1155&1.2.14.1149'
@@ -931,7 +981,8 @@ expEx=(
 'enableStaticImage2Optimizer&static image2 optimizer to optimize image urls",default:\K!.(?=})&true&s&xpuiJs&1.2.20.1210'
 'enableStrangerThingsEasterEgg&Stranger Things upside down Easter Egg",default:\K!1&true&s&xpuiJs&1.1.91.824'
 'enableSubtitlesAutogeneratedLabel&label in the subtitle picker.,default:\K!.(?=})&true&s&xpuiJs&1.1.70.610&1.2.50.335'
-'enableTogglePlaylistColumns&ability to toggle playlist column visibility",default:\K!1&true&s&xpuiJs&1.2.17.832'
+'enableTogglePlaylistColumns&ability to toggle playlist column visibility",default:\K!1&true&s&xpuiJs&1.2.17.832&1.2.66.447'
+'enableTracklistColumnsSorting&column reordering functionality in tracklists",default:\K!1&true&s&xpuiJs&1.2.69.448'
 'enableUserCommentsForEpisodes&user comments for podcast episodes",default:\K!1&true&s&xpuiJs&1.2.49.439'
 'enableUserCreatedArtwork&user created artworks for playlists",default:\K!1&true&s&xpuiJs&1.2.34.783&1.2.40.599'
 'enableUserProfileEdit&editing of user.s own profile in Web Player and DesktopX",default:\K!1&true&s&xpuiJs&1.1.87.612&1.2.25.1011'
@@ -939,20 +990,25 @@ expEx=(
 'enableVideoLabelForSearchResults&video label for search results",default:\K!1&true&s&xpuiJs&1.2.23.1114&1.2.29.605'
 'enableVideoPip&desktop picture-in-picture surface using betamax SDK.",default:\K!1&true&s&xpuiJs&1.2.13.656'
 'enableViewMode&list . compact mode in entity pages",default:\K!1&true&s&xpuiJs&1.2.24.754'
+'enableWatchFeed&Enable Watch Feed feature",default:\K!1&true&s&xpuiJs&1.2.56.497'
+'enableWatchFeedEntityPages&Watch Feed feature on entity pages",default:\K!1&true&s&xpuiJs&1.2.56.497'
 'enableWhatsNewFeed&what.s new feed panel",default:\K!1&true&s&xpuiJs&1.2.12.902&1.2.16.947'
 'enableWhatsNewFeedMainView&Whats new feed in the main view",default:\K!1&true&s&xpuiJs&1.2.17.832&1.2.45.454'
 'enableYLXEnhancements&Your Library X Enhancements",default:\K!1&true&s&xpuiJs&1.2.18.997&1.2.50.335'
 'enableYLXPrereleaseAlbums&album pre-releases in YLX",default:\K!1&true&s&xpuiJs&1.2.32.985'
 'enableYLXPrereleaseAudiobooks&audiobook pre-releases in YLX",default:\K!1&true&s&xpuiJs&1.2.32.985&1.2.47.366'
 'enableYLXPrereleases&album pre-releases in YLX",default:\K!1&true&s&xpuiJs&1.2.31.1205&1.2.31.1205'
+'enableYlxReverseSorting&Enable reverse sort direction in Your Library",default:\K!1&true&s&xpuiJs&1.2.60.564'
 'enableYLXTypeaheadSearch&jump to the first matching item",default:\K!1&true&s&xpuiJs&1.2.13.656'
+'enableZoomSettingsUIDesktop&zoom settings from the settings page on Desktop",default:\K!1&true&s&xpuiJs&1.2.17.832&1.2.53.437'
 'saveButtonAlwaysVisible&Display save button always in whats new feed",default:\K!1&true&s&xpuiJs&1.2.20.1210&1.2.28.0'
 'shareButtonPositioning&Share button positioning in NPV",values:.{1,3},default:.{1,4}NPV_\K(HIDDEN|VISIBLE_ON_HOVER)&ALWAYS_VISIBLE&s&xpuiJs&1.2.39.578&1.2.50.335'
-'showWrappedBanner&Show Wrapped banner on wrapped genre page",default:\K!1&true&s&xpuiJs&1.1.87.612'
+'showWrappedBanner&Show Wrapped banner on wrapped genre page",default:\K!1&true&s&xpuiJs&1.1.87.612&1.2.53.440'
 )
 premiumExpEx=(
 'addYourDJToLibraryOnPlayback&Add Your DJ to library on playback",default:\K!1&true&s&xpuiJs&1.2.6.861&1.2.50.335'
-'enableJamBroadcasting&Jam broadcasting and scanning",default:\K!1&true&s&xpuiJs&1.2.45.451'
+'enableJamBroadcasting&Jam broadcasting and scanning",default:\K!1&true&s&xpuiJs&1.2.45.451&1.2.59.518'
+'enableJamNearbyJoining&Jam Nearby Joining Connect devices in Connect Picker",default:\K!1&true&s&xpuiJs&1.2.60.564'
 'enableOfflineAlbumsListPlatform&offline albums loaded over List Platform",default::\K!1&true&s&xpuiJs&1.2.48.404'
 'enableYourDJ&the .Your DJ. feature.,default:\K!1&true&s&xpuiJs&1.2.6.861'
 'enableYourSoundCapsuleModal&showing a modal on desktop to users who have clicked on a Your Sound Capsule share link",default:\K!1&true&s&xpuiJs&1.2.38.720'

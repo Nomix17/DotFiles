@@ -12,3 +12,6 @@ ratbagctl "Logitech G102 LIGHTSYNC Gaming Mouse" profile 0 button 4 action set m
 ratbagctl "Logitech G102 LIGHTSYNC Gaming Mouse" profile 0 button 5 action set macro "KEY_F8"
 ratbagctl "Logitech G102 LIGHTSYNC Gaming Mouse" profile 0 led 0 set mode breathing
 ratbagctl "Logitech G102 LIGHTSYNC Gaming Mouse" profile 0 led 0 set color 000000
+
+# xinput set-button-map "Logitech G102 LIGHTSYNC Gaming Mouse" 1 2 3 0 0 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+

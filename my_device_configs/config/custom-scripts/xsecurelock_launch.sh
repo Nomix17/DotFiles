@@ -2,5 +2,4 @@
 export XSECURELOCK_PASSWORD_PROMPT=asterisks
 export XSECURELOCK_SHOW_HOSTNAME=0
 export XSECURELOCK_SHOW_DATETIME=0
-
 exec xsecurelock

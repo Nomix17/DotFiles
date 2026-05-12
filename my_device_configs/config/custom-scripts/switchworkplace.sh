@@ -1,4 +1,4 @@
-processnumber=$(ps aux | grep -E 'lutris|steam' | wc -l)
+processnumber=$(ps aux | grep -E 'lutris|steam|heroic|minecraft' | wc -l)
 
 if [ "$processnumber" -gt 1 ]; then
 
