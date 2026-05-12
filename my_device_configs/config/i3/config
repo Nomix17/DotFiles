@@ -213,7 +213,7 @@ exec_always --no-startup-id xinput --set-prop "Logitech G102 LIGHTSYNC Gaming Mo
 exec --no-startup-id xset -b
 
 # Keybinding
-bindsym $mod+a exec rofi -show drun -theme ~/.config/rofi/app-launcher/phantom.rasi
+bindsym $mod+a exec rofi -show drun -theme ~/.config/rofi/stealth.rasi
 bindsym Control+Mod1+Delete exec  ~/.config/rofi/powermenu/powermenu.sh
 bindsym $mod+S exec --no-startup-id ~/.config/custom-scripts/screenshot.sh
 bindsym $mod+e exec --no-startup-id ~/.config/custom-scripts/screenshot.sh fullscreen

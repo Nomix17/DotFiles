@@ -1,0 +1,50 @@
+[window]
+padding = { x = 7, y = 5 }
+dimensions = { columns = 85, lines = 21 }
+position = { x = 0, y = 0 }
+dynamic_title = true
+
+[bell]
+duration = 0
+
+[font]
+size = 12.0
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "SemiBold"
+
+[cursor]
+style = { shape = "Beam" }
+
+[colors.primary]
+background = "#040507"
+foreground = "#bdc3c9"
+
+[colors.cursor]
+cursor = "#b8c4d1"
+text = "#0d0e0f"
+
+[colors.selection]
+text = "#101214"
+background = "#4a5057"
+
+[colors.normal]
+black   = "#1a1a1a"
+red     = "#8b5555"
+green   = "#557a55"
+yellow  = "#8b7e55"
+blue    = "#55657a"
+magenta = "#7a5577"
+cyan    = "#557a7a"
+white   = "#c0c0c0"
+
+[colors.bright]
+black   = "#4a4a4a"
+red     = "#a86060"
+green   = "#6a9a6a"
+yellow  = "#a89a6a"
+blue    = "#6a80a8"
+magenta = "#a06a9a"
+cyan    = "#6a9a9a"
+white   = "#e0e0e0"

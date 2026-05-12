@@ -1,5 +1,0 @@
-require("configs.options")
-require("configs.keymaps")
-require("configs.plugins")
-require("configs.colorschemes")
-require("configs.lsp")

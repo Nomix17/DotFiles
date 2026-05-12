@@ -1,6 +1,6 @@
 [global]
   frame_width = 2 
-
+  font = "JetBrainsMono NF 10"
 [urgency_low]
     background = "#1e1e1e"
     foreground = "#ffffff"
