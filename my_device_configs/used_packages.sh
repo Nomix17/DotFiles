@@ -9,7 +9,9 @@ i3-autolayout
 i3-lock
 lxappearance
 polybar
-picom 
+picom
+xrandr
+feh
 
 # hyprland
 waybar
