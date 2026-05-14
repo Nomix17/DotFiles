@@ -6,49 +6,39 @@
     "modules-left": [
       "custom/space",
       "hyprland/workspaces",
-      "hyprland/window",
+      "hyprland/window"
     ],
-
     "modules-center": [
-        "clock",
+        "clock"
     ],
-
     "modules-right": [
         "pulseaudio",
         "network",
-        //"memory",
         "temperature",
-        "power-profiles-daemon",
         "cpu",
         "backlight",
-        "battery",
-        "battery#bat2"
+        "battery"
     ],
-
     "clock": {
         "format": "{:L%I:%M %p}",
-        "tooltip-format": "<big>{%Y :%M %p}</big>\n<tt><small>{calendar}</small></tt>",
+        "tooltip-format": "<big>{:%Y-%m-%d}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
-
     "cpu": {
         "format": "   {usage}%",
         "tooltip": false
     },
-
     "memory": {
         "format": "  {}%"
     },
-
     "temperature": {
         "critical-threshold": 80,
         "format": "{icon} {temperatureC}°C",
         "format-icons": ["", "", ""]
     },
     "backlight": {
-        "format": "󰃠 {percent}%",
+        "format": "󰃠 {percent}%"
     },
-
     "battery": {
         "states": {
             "warning": 30,
@@ -61,11 +51,6 @@
         "format-alt": "{icon} {time}",
         "format-icons": ["", "", "", "", ""]
     },
-
-    "battery#bat2": {
-        "bat": "BAT2"
-    },
-
     "network": {
         "format-wifi": "  {essid} ",
         "format-ethernet": "{ipaddr}/{cidr} ",
@@ -74,12 +59,11 @@
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
-
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "format-bluetooth": "{icon} {volume}%",
         "format-bluetooth-muted": "{icon} 0%",
-        "format-muted": " {volume}%",
+        "format-muted": " {volume}%",
         "format-source": " {volume}%",
         "format-source-muted": "",
         "format-icons": {
@@ -93,9 +77,8 @@
         },
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     },
-
-    "hyprland/window":{
-      "format": "{}",
-      "max-length": 30,
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 30
     }
 }
