@@ -1,5 +1,5 @@
 {
-    "name": "phantom",
+    "name": "Stealth",
     "variables": {
         "accent_color": "#FFFFFF",
         "accent_bg_color": "#3a3a3a",
@@ -18,7 +18,7 @@
         "error_fg_color": "#c4c4c4",
         "window_bg_color": "#000000",
         "window_fg_color": "#e2e2e5",
-        "view_bg_color": "#000000",
+        "view_bg_color": "#0a0a0a",
         "view_fg_color": "#e2e2e5",
         "headerbar_bg_color": "#000000",
         "headerbar_fg_color": "#ffffff",
