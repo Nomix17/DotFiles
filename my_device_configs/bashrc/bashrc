@@ -39,12 +39,10 @@ export PATH="$PATH:/usr/bin"
 export PATH="$PATH:$HOME/.local/bin"
 export EDITOR=nvim
 export QT_AUDIO_BACKEND=pulseaudio
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 #ALIAS
+alias l="ls -la"
 alias ll='ls -l'
-alias lla="ls -la"
 alias la="ls -a"
 alias :q="exit"
 alias vi="nvim"
