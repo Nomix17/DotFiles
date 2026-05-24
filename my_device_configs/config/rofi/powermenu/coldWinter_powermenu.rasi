@@ -1,0 +1,164 @@
+/**
+ *
+ * Author : Aditya Shakya (adi1090x)
+ * Github : @adi1090x
+ *
+ * Rofi Theme File
+ * Rofi Version: 1.7.3
+ *
+ * Modified: left-anchored vertical power menu
+ * Colors matched to user's existing dark rofi theme
+ **/
+
+/*****----- Configuration -----*****/
+configuration {
+    show-icons: false;
+
+    /* Vim motion navigation */
+    keybinding {
+        kb-move-front:          "ctrl+Home";
+        kb-move-end:            "ctrl+End";
+        kb-row-up:              "Up,Control+k,k";
+        kb-row-down:            "Down,Control+j,j";
+        kb-accept-entry:        "Return,KP_Enter,l";
+        kb-remove-to-eol:       "Control+k";
+        kb-cancel:              "Escape,q";
+    }
+}
+
+/*****----- Global Properties -----*****/
+* {
+    font:             "JetBrainsMono Nerd Font 10";
+
+    bg:               #040507;
+    bg-alt:           #14161B;
+    border-col:       #1f242d;
+    fg:               #ffffff;
+    fg-dim:           #434343;
+    accent:           #c9a978;
+
+    background-color: transparent;
+    text-color:       @fg;
+    margin:           0px;
+    padding:          0px;
+    spacing:          0px;
+}
+
+/*****----- Main Window -----*****/
+window {
+    location:         west;
+    anchor:           west;
+    fullscreen:       false;
+    width:            115px;
+    x-offset:         15px;
+    y-offset:         0px;
+
+    background-color: @bg;
+    border:           2px solid;
+    border-color:     @border-col;
+    border-radius:    20px;
+    cursor:           "default";
+}
+
+/*****----- Main Box -----*****/
+mainbox {
+    spacing:          10px;
+    padding:          12px;
+    background-color: transparent;
+    children:         [ "listview" ];
+}
+
+/*****----- Listview -----*****/
+listview {
+    columns:       1;
+    lines:         5;
+    cycle:         true;
+    dynamic:       true;
+    scrollbar:     false;
+    layout:        vertical;
+    fixed-height:  true;
+    fixed-columns: true;
+
+    spacing:          6px;
+    background-color: transparent;
+    text-color:       @fg;
+    cursor:           "default";
+}
+
+/*****----- Elements -----*****/
+element {
+    padding:          14px 0px;
+    border-radius:    10px;
+    background-color: @bg-alt;
+    text-color:       @fg;
+    cursor:           pointer;
+}
+
+element-text {
+    font:             "feather bold 22";
+    background-color: transparent;
+    text-color:       inherit;
+    cursor:           inherit;
+    vertical-align:   0.5;
+    horizontal-align: 0.5;
+}
+
+element normal.normal {
+    background-color: @bg-alt;
+    text-color:       @fg;
+}
+
+element selected.normal {
+    background-color: #1f242d;
+    text-color:       @fg;
+    border:           1px solid;
+    border-color:     @border-col;
+}
+
+element normal.urgent {
+    background-color: @bg-alt;
+    text-color:       @accent;
+}
+
+element selected.urgent {
+    background-color: #1f242d;
+    text-color:       @accent;
+    border:           1px solid;
+    border-color:     @border-col;
+}
+
+element normal.active {
+    background-color: @bg-alt;
+    text-color:       @fg;
+}
+
+element selected.active {
+    background-color: #1f242d;
+    text-color:       @fg;
+    border:           1px solid;
+    border-color:     @border-col;
+}
+
+/*****----- Confirmation window overrides -----*****/
+message {
+    padding:          10px;
+    border-radius:    6px;
+    background-color: @bg-alt;
+    text-color:       @fg;
+}
+
+textbox {
+    background-color:  inherit;
+    text-color:        inherit;
+    vertical-align:    0.5;
+    horizontal-align:  0.5;
+    blink:             true;
+    markup:            true;
+}
+
+error-message {
+    padding:          12px;
+    border-radius:    6px;
+    background-color: @bg;
+    text-color:       @fg;
+}
