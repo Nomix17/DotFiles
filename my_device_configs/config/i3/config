@@ -62,10 +62,11 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-bindsym $mod+Shift+h move left 200px
-bindsym $mod+Shift+j move down 200px
-bindsym $mod+Shift+k move up 200px
-bindsym $mod+Shift+l move right 200px
+
+bindsym $mod+Shift+h exec ~/.config/custom-scripts/i3-move-win-to-edge.sh -l
+bindsym $mod+Shift+j exec ~/.config/custom-scripts/i3-move-win-to-edge.sh -b
+bindsym $mod+Shift+k exec ~/.config/custom-scripts/i3-move-win-to-edge.sh -t
+bindsym $mod+Shift+l exec ~/.config/custom-scripts/i3-move-win-to-edge.sh -r
 
 # split in horizontal orientation
 
@@ -196,8 +197,6 @@ client.unfocused        #1b2021 #1b2021 #636363 #1b2021
 client.focused_inactive #1b2021 #1b2021 #d3dae3 #1b2021
 client.urgent           #636363 #636363 #ffffff #636363
 
-
-
 # Custom Rules
 for_window [class="Mofi"] floating enable
 for_window [class="VKeyboard"] floating enable
@@ -207,6 +206,9 @@ for_window [instance="Godot_Engine"] border normal
 # for_window [class="mpv"] floating enable, resize set 600 450
 
 # Autostarts 
+exec_always gsettings set org.gnome.desktop.interface icon-theme 'AdwaitaNord'
+exec_always gsettings set org.gnome.desktop.interface font-name 'JetBrainsMono 11'
+exec_always gsettings set org.gnome.desktop.interface cursor-theme 'Oreo-Black-Cursors'
 exec --no-startup-id ~/.config/custom-scripts/mouseConfigs.sh 
 exec_always --no-startup-id xinput --set-prop "Logitech G102 LIGHTSYNC Gaming Mouse" "libinput Accel Profile Enabled" 0 1
 exec_always --no-startup-id xinput --set-prop "Logitech G102 LIGHTSYNC Gaming Mouse" "libinput Accel Speed" -0.5
@@ -214,7 +216,7 @@ exec --no-startup-id xset -b
 
 # Keybinding
 bindsym $mod+a exec rofi -show drun -theme ~/.config/rofi/stealth.rasi
-bindsym Control+Mod1+Delete exec  ~/.config/rofi/powermenu/powermenu.sh
+bindsym Control+Mod1+Delete exec ~/.config/rofi/powermenu/powermenu.sh
 bindsym $mod+S exec --no-startup-id ~/.config/custom-scripts/screenshot.sh
 bindsym $mod+e exec --no-startup-id ~/.config/custom-scripts/screenshot.sh fullscreen
 bindsym Control+Mod1+space exec --no-startup-id i3-msg [class="scrcpy"] move scratchpad && ~/.config/custom-scripts/picture-no-picture.sh
@@ -222,7 +224,7 @@ bindsym F8 exec --no-startup-id i3-msg [class="scrcpy"] move scratchpad && ~/.co
 bindsym Control+Mod1+v exec VKeyboard
 bindsym Control+Mod1+l exec ~/.config/custom-scripts/xsecurelock_launch.sh
 bindsym Control+Mod1+c exec ~/.config/custom-scripts/ocrscript.sh
-bindsym $mod+p exec python ~/.config/custom-scripts/color_picker.py 
+bindsym $mod+p exec ~/.config/custom-scripts/.venv/bin/python ~/.config/custom-scripts/color_picker.py 
 bindsym F9 exec  ~/.config/custom-scripts/switchworkplace.sh
 bindsym Control+Mod1+t exec alacritty
 
