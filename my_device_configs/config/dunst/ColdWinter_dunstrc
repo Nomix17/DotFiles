@@ -1,0 +1,106 @@
+[global]
+    ### Display ###
+    monitor = 0
+    follow = mouse
+
+    ### Geometry ###
+    width = (300, 400)
+    height = (0, 300)
+    origin = top-right
+    offset = (12, 40)
+    scale = 0
+    notification_limit = 5
+
+    ### Progress bar ###
+    progress_bar = true
+    progress_bar_height = 10
+    progress_bar_frame_width = 1
+    progress_bar_min_width = 150
+    progress_bar_max_width = 300
+    progress_bar_corner_radius = 5
+
+    ### Appearance ###
+    transparency = 10
+    corner_radius = 10
+    frame_width = 1
+    frame_color = "#97a6c6"
+    gap_size = 6
+    separator_color = frame
+    separator_height = 1
+    sort = yes
+    idle_threshold = 120
+
+    ### Text ###
+    font = JetBrains Mono 11
+    line_height = 1
+    markup = full
+    format = "<span foreground='#9da9b5'><b>%s</b></span>\n%b"
+    alignment = left
+    vertical_alignment = center
+    show_age_threshold = 60
+    ellipsize = middle
+    ignore_newline = no
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = yes
+
+    ### Icons ###
+    icon_position = left
+    min_icon_size = 32
+    max_icon_size = 64
+    icon_path = /home/pcuser/.icons/papirus-src/Papirus-Dark/16x16/symbolic/status/:/home/pcuser/.icons/papirus-src/Papirus-Dark/16x16/symbolic/devices/
+
+    ### History ###
+    sticky_history = yes
+    history_length = 20
+
+    ### Misc/Advanced ###
+    dmenu = /usr/bin/rofi -dmenu -p dunst
+    browser = xdg-open
+    always_run_script = true
+    title = Dunst
+    class = Dunst
+    corner_radius = 10
+    ignore_dbusclose = false
+
+    ### Mouse ###
+    mouse_left_click = close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
+
+
+[urgency_low]
+    background = "#14161b"
+    foreground = "#D8DEE9"
+    frame_color = "#4C566A"
+    timeout = 2
+
+[urgency_normal]
+    background = "#14161b"
+    foreground = "#ECEFF4"
+    frame_color = "#4C566A"
+    timeout = 2
+
+[urgency_critical]
+    background = "#14161b"
+    foreground = "#ECEFF4"
+    frame_color = "#4C566A"
+    timeout = 0
+
+[spotify]
+    appname = Spotify
+    background = "#222730"
+    foreground = "#A3BE8C"
+    frame_color = "#A3BE8C"
+
+[network]
+    appname = "NetworkManager*"
+    background = "#14161b"
+    foreground = "#81A1C1"
+    frame_color = "#81A1C1"
+
+[battery]
+    appname = "*battery*"
+    background = "#14161b"
+    foreground = "#EBCB8B"
+    frame_color = "#EBCB8B"
