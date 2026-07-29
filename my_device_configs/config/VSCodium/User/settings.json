@@ -1,0 +1,46 @@
+{
+  "git.openRepositoryInParentFolders": "never",
+  "workbench.colorTheme": "Dark Modern",
+//  "files.autoSave": "afterDelay",
+// "files.autoSaveDelay": 100,
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
+  "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+  "vscode-neovim.neovimInitVimPaths.linux": "/home/pcuser/.config/vscode_nvim/init.lua",
+  "vscode-neovim.compositeKeys": {
+    "jj": { "command": "vscode-neovim.escape" },
+    "JJ": { "command": "vscode-neovim.escape" },
+    "Jj": { "command": "vscode-neovim.escape" },
+    "jJ": { "command": "vscode-neovim.escape" }
+  },
+  "vscode-neovim.compositeTimeout": 300,
+  "editor.lineNumbers": "relative",
+  "editor.renderLineHighlight": "all",
+  "editor.smoothScrolling": true,
+  "workbench.list.smoothScrolling": true,
+  "editor.guides.indentation": true,
+  "editor.guides.highlightActiveIndentation": true,
+  "workbench.colorCustomizations": {
+    "editorIndentGuide.background1": "#474646",
+    "editorIndentGuide.activeBackground1": "#7a7a7a"
+  },
+  "workbench.editor.showTabs": "multiple",
+  "workbench.editor.tabActionCloseVisibility": true,
+  "workbench.editor.decorations.badges": true,
+  "workbench.editor.decorations.colors": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "git.decorations.enabled": true,
+  "scm.diffDecorations": "all",
+  "scm.diffDecorationsGutterWidth": 3,
+  "editor.multiCursorModifier": "alt",
+  "markdown.preview.scrollPreviewWithEditor": true,
+  "markdown.preview.scrollEditorWithPreview": true,
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "editor.multiCursorLimit": 10000,
+  "workbench.iconTheme": "vs-seti",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "window.enableMenuBarMnemonics": false,
+  "window.customMenuBarAltFocus": false,
+  "window.menuBarVisibility": "compact"
+}

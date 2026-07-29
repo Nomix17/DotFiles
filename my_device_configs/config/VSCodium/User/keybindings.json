@@ -1,0 +1,172 @@
+[
+  { "key": "alt+,", "command": "workbench.action.previousEditor",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+.", "command": "workbench.action.nextEditor",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+shift+,", "command": "workbench.action.moveEditorLeftInGroup",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+shift+.", "command": "workbench.action.moveEditorRightInGroup",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+0", "command": "workbench.action.lastEditorInGroup",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+1", "command": "workbench.action.openEditorAtIndex1",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+2", "command": "workbench.action.openEditorAtIndex2",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+3", "command": "workbench.action.openEditorAtIndex3",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+4", "command": "workbench.action.openEditorAtIndex4",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+5", "command": "workbench.action.openEditorAtIndex5",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+6", "command": "workbench.action.openEditorAtIndex6",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+7", "command": "workbench.action.openEditorAtIndex7",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+8", "command": "workbench.action.openEditorAtIndex8",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+9", "command": "workbench.action.openEditorAtIndex9",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "alt+d", "command": "workbench.action.closeActiveEditor",
+    "when": "editorTextFocus && neovim.mode == 'normal'" },
+  { "key": "alt+shift+d", "command": "workbench.action.reopenClosedEditor",
+    "when": "editorTextFocus && neovim.mode == 'normal'" },
+  { "key": "alt+p", "command": "workbench.action.showAllEditors",
+    "when": "editorTextFocus && neovim.mode == 'normal'" },
+
+  // ── explorer, markdown, problems panel ───────────────────────────
+  { "key": "alt+b", "command": "workbench.action.toggleSidebarVisibility",
+    "when": "editorTextFocus && neovim.mode == 'normal'" },
+  { "key": "alt+r", "command": "markdown.showPreviewToSide",
+    "when": "editorTextFocus && neovim.mode == 'normal'" },
+  { "key": "alt+space", "command": "workbench.actions.view.problems",
+    "when": "editorTextFocus && neovim.mode == 'normal'" },
+
+  // ── intellisense autocomplete suggestions ─────────────────────────
+  { "key": "alt+k", "command": "selectPrevSuggestion",
+    "when": "suggestWidgetVisible && neovim.mode == 'insert'" },
+  { "key": "alt+l", "command": "acceptSelectedSuggestion",
+    "when": "suggestWidgetVisible && neovim.mode == 'insert'" },
+  { "key": "alt+h", "command": "hideSuggestWidget",
+    "when": "suggestWidgetVisible && neovim.mode == 'insert'" },
+  { "key": "alt+j", "command": "selectNextSuggestion",
+    "when": "suggestWidgetVisible && neovim.mode == 'insert'" },
+
+  { "key": "ctrl+b", "command": "workbench.action.toggleSidebarVisibility",
+    "when": "editorTextFocus && neovim.mode == 'normal'" },
+  { "key": "ctrl+f", "command": "editor.toggleFold",
+    "when": "editorTextFocus && neovim.mode == 'normal'" },
+
+  { "key": "ctrl+w h", "command": "workbench.action.navigateLeft",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "ctrl+w l", "command": "workbench.action.navigateRight",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "ctrl+w j", "command": "workbench.action.navigateDown",
+    "when": "neovim.mode == 'normal'" },
+  { "key": "ctrl+w k", "command": "workbench.action.navigateUp",
+    "when": "neovim.mode == 'normal'" },
+
+  // same, but from the sidebar/explorer
+  { "key": "ctrl+w h", "command": "workbench.action.navigateLeft",
+    "when": "sideBarFocus" },
+  { "key": "ctrl+w l", "command": "workbench.action.navigateRight",
+    "when": "sideBarFocus" },
+  { "key": "ctrl+w j", "command": "workbench.action.navigateDown",
+    "when": "sideBarFocus" },
+  { "key": "ctrl+w k", "command": "workbench.action.navigateUp",
+    "when": "sideBarFocus" },
+
+    // ── notebook navigation & management ──────────────────────────────
+  // 1) When in edit mode (inside cell text editor)
+  {
+    "key": "ctrl+w j",
+    "command": "notebook.focusNextEditor",
+    "when": "notebookEditorFocused && editorTextFocus && neovim.mode == 'normal'"
+  },
+  {
+    "key": "ctrl+w k",
+    "command": "notebook.focusPreviousEditor",
+    "when": "notebookEditorFocused && editorTextFocus && neovim.mode == 'normal'"
+  },
+
+  // 2) When in command mode (cell container selected)
+  {
+    "key": "ctrl+w j",
+    "command": "notebook.focusNextEditor",
+    "when": "notebookEditorFocused && notebookCellFocused"
+  },
+  {
+    "key": "ctrl+w k",
+    "command": "notebook.focusPreviousEditor",
+    "when": "notebookEditorFocused && notebookCellFocused"
+  },
+
+  // 3) When NO cell is focused at all (jump to first / last cell)
+  {
+    "key": "ctrl+w k",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "notebook.focusTop",
+        "notebook.cell.edit"
+      ]
+    },
+    "when": "notebookEditorFocused && !editorTextFocus && !notebookCellFocused"
+  },
+  {
+    "key": "ctrl+w j",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "notebook.focusBottom",
+        "notebook.cell.edit"
+      ]
+    },
+    "when": "notebookEditorFocused && !editorTextFocus && !notebookCellFocused"
+  },
+
+  { "key": "ctrl+d ctrl+d", "command": "runCommands",
+    "args": {
+      "commands": [ "notebook.cell.delete", "notebook.cell.edit" ]
+    },
+    "when": "notebookEditorFocused"
+  },
+  { "key": "ctrl+w n", "command": "notebook.cell.insertCodeCellBelow",
+    "when": "notebookEditorFocused" },
+  {
+    "key": "ctrl+w m",
+    "command": "notebook.cell.changeLanguage",
+    "when": "notebookEditorFocused && (neovim.mode == 'normal' || notebookCellFocused)"
+  },
+  // ── general menu, tree & command palette navigation (alt + hjkl) ──
+  { "key": "alt+j", "command": "list.focusDown",
+    "when": "listFocus" },
+  { "key": "alt+k", "command": "list.focusUp",
+    "when": "listFocus" },
+  { "key": "alt+h", "command": "list.collapse",
+    "when": "listFocus" },
+  { "key": "alt+l", "command": "list.select",
+    "when": "listFocus" },
+  { "key": "alt+j", "command": "quickInput.next",
+    "when": "inQuickOpen" },
+  { "key": "alt+k", "command": "quickInput.previous",
+    "when": "inQuickOpen" },
+  { "key": "alt+l", "command": "workbench.action.acceptSelectedQuickOpenItem",
+    "when": "inQuickOpen" },
+
+  {
+    "key": "g c",
+    "command": "editor.action.commentLine",
+    "when": "editorTextFocus && neovim.mode == 'visual'"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "vscode-neovim.send",
+    "args": "<C-r>",
+    "when": "editorTextFocus && neovim.mode == 'normal'"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "-workbench.action.openRecent"
+  }
+]
