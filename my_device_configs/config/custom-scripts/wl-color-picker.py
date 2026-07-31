@@ -8,7 +8,7 @@ img_path = "/tmp/color_picker_img.png"
 subprocess.run(["notify-send", "Color Picker", "Pick a pixel..."])
 
 slurp_process = subprocess.run(
-    ["slurp", "-p", "-f", "%x_%y"],
+    ["slurp", "-p", "-b", "00000000", "-f", "%x_%y"],
     stdout=subprocess.PIPE, stderr=subprocess.PIPE
 )
 
