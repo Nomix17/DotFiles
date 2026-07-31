@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name        Fix witanime style
-// @namespace   https://github.com/timmontague/youtube-disable-number-seek
-// @description disables the 0-9 keyboard shortcuts
-// @author      timm
-// @version     1.0.2
+// @namespace   https://github.com/Nomix17
+// @description Fix witanime style
+// @author      Nomix17
+// @version     1.0.0
 // @match       *://witanime.you/*
 // @run-at      document-end
 // ==/UserScript==

@@ -162,23 +162,6 @@
   },
   {
     "enabled": true,
-    "installDate": 1769112103145,
-    "name": "witanime",
-    "sections": [
-      {
-        "code": "body,.footer{\n    background-color:#0f121b;\n    height:100%;\n}\n.triangle-down,\n.second-section+.container,\n.col-md-4.col-sm-12,\n.site-copyrights,\n#disqus_thread,\n#inputEpisode,\n.menu-item-21993,\n.anime-page-link,\n.search-in-episodes-list,\n.panel-heading{\n    display:none!important;\n}\n.panel-body,\n.content.episode-download-container,\n.second-section,\n.main-section,\n#mCSB_1,\n#inputEpisode,\n.space,\n.content,\n.header-navbar,\n.row{\n    background-color:#0f121b;\n}\n.episode-watch-links  .row,.user-post-info-content .row ,.container.header-navbar-container .row,.anime-list-content{\n    background-color:#131722;\n}\n\n.container.episode-watch-container .row:first-of-type {\n\n    padding-top: 15px;\n    padding-bottom: 15px;\n}\n\n.second-section{\n    background-image:none;\n}\n.server-link{\n    color:white;\n    background-color:#1e1e1e;\n    margin-top:10px;\n    margin-right:20px;\n    border-radius:100px;\n}\n#iframe-container{\n    background-image:none;\n}\n\n.header-navbar,\n.page-content-container{\n    background-color:#131722;\n}\n\nli[id^=\"menu-item-\"] a[href] {\n    color: white;\n}\n\nli[id^=\"menu-item-\"]:hover{\n    color:black;\n}\n\n#theme-mode,\nbutton[class=\"btn dropdown-toggle\"]\n{\n    display: none;\n}\n#ShowSearch i{\n  display: inline;\n  font-size: 1em;\n  line-height: 1;\n  color:#101010;\n}\n#ShowSearch{\n  width:43px;\n  height:43px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n  font-size: 16px;\n  border-radius:10px;\n  background-color:#027e96;\n}\n\n#ShowSearch:hover i{\n  color: white;\n}\ndiv[class=\"container header-navbar-container\"] div[class=\"row\"]{    \n    height:10px;\n}\ndiv[class=\"navbar-buttons\"]{\n    margin:0px !important; \n    padding:0px !important;\n}\n\n#searchContent {\n    margin-top: 60px;\n}\ninput{\n  direction: ltr;\n}\nimg[id=\"lucodeia-no-contents-img\"]{\n    display:none;\n}\ndiv[class=\"container header-navbar-container\"]{\n    margin:0;\n    padding:0;\n}\n\ndiv[class=\"col-lg-3 col-md-3 col-sm-4 col-xs-12 col-no-padding col-mobile-no-padding\"]{\n    background-color:#131722;\n}\n.anime-card-container,\n.anime-card-details,\n.episodes-card-container{\n    border:none;\n    border-radius:10px;\n}\n\na[class=\"see-all\"]{\n    border-radius:10px;\n}\nimg{\n    border-radius:10px 10px 0px 0px;\n}\n\n.anime-card-title {\n    border:none !important;\n}\n\n::-webkit-scrollbar {\n  width: 9px;\n  height: 9px;\n}\n\n::-webkit-scrollbar-track {\n  background: transparent;\n  border-radius: 10px;\n}\n\n::-webkit-scrollbar-thumb {\n  background: rgba(255,255,255,0.2);\n  border-radius: 10px;\n}\n\n::-webkit-scrollbar-thumb:hover {\n  background: rgba(255,255,255,0.3);\n}\n\n::-webkit-scrollbar-corner {\n  background: transparent;\n}\n* {\n  scrollbar-width: thin;\n  scrollbar-color: rgba(255,255,255,0.2) transparent;\n}",
-        "urlPrefixes": [
-          "https://witanime."
-        ]
-      }
-    ],
-    "updateDate": 1785495187765,
-    "_id": "7f2b5f7a-fc8f-4cf9-8b5b-1fe425097236",
-    "_rev": 1785495187765,
-    "id": 3
-  },
-  {
-    "enabled": true,
     "installDate": 1769112128054,
     "name": "witanimeAnime",
     "sections": [
@@ -227,5 +210,22 @@
     "_id": "043a3856-b22f-48e8-b010-97d7628ad821",
     "_rev": 1769727668747,
     "id": 6
+  },
+  {
+    "enabled": true,
+    "installDate": 1785504230854,
+    "name": " witanimeMain",
+    "sections": [
+      {
+        "code": "body,.footer{\n    background-color:#0f121b;\n    height:100%;\n}\n.triangle-down,\n.second-section+.container,\n.col-md-4.col-sm-12,\n.site-copyrights,\n#disqus_thread,\n#inputEpisode,\n.menu-item-21993,\n.anime-page-link,\n.search-in-episodes-list,\n.panel-heading{\n    display:none!important;\n}\n.panel-body,\n.content.episode-download-container,\n.second-section,\n.main-section,\n#mCSB_1,\n#inputEpisode,\n.space,\n.content,\n.header-navbar,\n.row{\n    background-color:#0f121b;\n}\n.episode-watch-links  .row,.user-post-info-content .row ,.container.header-navbar-container .row,.anime-list-content{\n    background-color:#131722;\n}\n.container.episode-watch-container .row:first-of-type {\n    padding-top: 15px;\n    padding-bottom: 15px;\n}\n.second-section{\n    background-image:none;\n}\n.server-link{\n    color:white;\n    background-color:#1e1e1e;\n    margin-top:10px;\n    margin-right:20px;\n    border-radius:100px;\n}\n#iframe-container{\n    background-image:none;\n}\n.header-navbar,\n.page-content-container{\n    background-color:#131722;\n}\nli[id^=\"menu-item-\"] a[href] {\n    color: white;\n}\nli[id^=\"menu-item-\"]:hover{\n    color:black;\n}\n#theme-mode,\nbutton[class=\"btn dropdown-toggle\"]\n{\n    display: none;\n}\n#ShowSearch i{\n  display: inline;\n  font-size: 1em;\n  line-height: 1;\n  color:#101010;\n}\n#ShowSearch{\n  width:43px;\n  height:43px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n  font-size: 16px;\n  border-radius:10px;\n  background-color:#027e96;\n  cursor: pointer;\n}\n#ShowSearch:hover i{\n  color: white;\n}\ndiv[class=\"container header-navbar-container\"] div[class=\"row\"]{    \n    height:10px;\n}\ndiv[class=\"navbar-buttons\"]{\n    margin:0px !important; \n    padding:0px !important;\n}\ninput{\n  direction: ltr;\n}\nimg[id=\"lucodeia-no-contents-img\"]{\n    display:none;\n}\ndiv[class=\"container header-navbar-container\"]{\n    margin:0;\n    padding:0;\n}\ndiv[class=\"col-lg-3 col-md-3 col-sm-4 col-xs-12 col-no-padding col-mobile-no-padding\"]{\n    background-color:#131722;\n}\n.anime-card-container,\n.anime-card-details,\n.episodes-card-container{\n    border:none;\n    border-radius:10px;\n}\na[class=\"see-all\"]{\n    border-radius:10px;\n}\nimg{\n    border-radius:10px 10px 0px 0px;\n}\n.anime-card-title {\n    border:none !important;\n}\n::-webkit-scrollbar {\n  width: 9px;\n  height: 9px;\n}\n::-webkit-scrollbar-track {\n  background: transparent;\n  border-radius: 10px;\n}\n::-webkit-scrollbar-thumb {\n  background: rgba(255,255,255,0.2);\n  border-radius: 10px;\n}\n::-webkit-scrollbar-thumb:hover {\n  background: rgba(255,255,255,0.3);\n}\n::-webkit-scrollbar-corner {\n  background: transparent;\n}\n* {\n  scrollbar-width: thin;\n  scrollbar-color: rgba(255,255,255,0.2) transparent;\n}\n#searchContent {\n    margin-top: 60px;\n}\n#ws-search-toggle{\n    display:none;\n}\n#ws-search-bar{\n    display:none;\n}\n#ws-search-toggle:checked ~ #ws-search-bar{\n    display:flex;\n}\n\n#ws-search-form{\n    display:flex;\n    align-items:center;\n    gap:6px;\n}\n\n.header-navbar {\n    padding: 4px 0;\n}\n.header-navbar > div:nth-of-type(2) {\n    gap: 8px;\n}\n.header-navbar > div:nth-of-type(2) > div {\n    transition: background-color .2s ease, color .2s ease;\n    height:55px !important;\n}\n.header-navbar > div:nth-of-type(2) > div:hover {\n    background-color: rgba(255,255,255,0.1) !important;\n    color: #fff !important;\n}\nimg[alt=\"Logo\"] {\n    height:55px !important;\n    border-radius: 10px;\n    transition: filter .2s ease;\n}\nimg[alt=\"Logo\"]:hover {\n    filter: drop-shadow(-1px -1px 10px rgba(255,255,255,0.3));\n}",
+        "urlPrefixes": [
+          "https://witanime."
+        ]
+      }
+    ],
+    "_rev": 1785506580914,
+    "updateDate": 1785506580914,
+    "_id": "47c39c54-0702-4303-8b21-cafb38374235",
+    "id": 8
   }
 ]
