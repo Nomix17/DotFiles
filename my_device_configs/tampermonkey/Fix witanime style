@@ -125,6 +125,11 @@
     }
 
     function addEventListeners(inputElement, searchButton, closeButton, searchBar) {
+        window.addEventListener("keydown", (event) => {
+            if(event.key === "/") {
+                inputElement.focus();
+            }
+        });
         inputElement.addEventListener("focus", function() {
             this.style.border = "1px solid #027e96";
             this.style.boxShadow = "0 0 0 2px rgba(2, 126, 150, 0.2)";
@@ -230,11 +235,11 @@
 
             const oldContainers = document.querySelectorAll('ul.menu a');
             const menuItems = [
-                { element: document.createElement("div"), text: "الرئيسية", href: "https://witanime.red/" },
-                { element: document.createElement("div"), text: "قائمة الأنمي", href: "https://witanime.red/قائمة-الانمي/" },
-                { element: document.createElement("div"), text: "أفلام الأنمي", href: "https://witanime.red/anime-type/movie/" },
-                { element: document.createElement("div"), text: "أنميات الموسم", href: "https://witanime.red/anime-season/%D8%B5%D9%8A%D9%81-2025/" },
-                { element: document.createElement("div"), text: "مواعيد الحلقات", href: "https://witanime.red/%d9%85%d9%88%d8%a7%d8%b9%d9%8a%d8%af-%d8%a7%d9%84%d8%ad%d9%84%d9%82%d8%a7%d8%aa/" }
+                { element: document.createElement("div"), text: "الرئيسية", href: window.location.origin },
+                { element: document.createElement("div"), text: "قائمة الأنمي", href: `${window.location.origin}/قائمة-الانمي/` },
+                { element: document.createElement("div"), text: "أفلام الأنمي", href: `${window.location.origin}/anime-type/movie/` },
+                { element: document.createElement("div"), text: "أنميات الموسم", href: `${window.location.origin}/anime-season/%D8%B5%D9%8A%D9%81-2025/` },
+                { element: document.createElement("div"), text: "مواعيد الحلقات", href: `${window.location.origin}/%d9%85%d9%88%d8%a7%d8%b9%d9%8a%d8%af-%d8%a7%d9%84%d8%ad%d9%84%d9%82%d8%a7%d8%aa/` }
             ];
 
             headerContainer.innerHTML = "";
