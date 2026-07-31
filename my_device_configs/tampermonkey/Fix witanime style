@@ -4,7 +4,7 @@
 // @description disables the 0-9 keyboard shortcuts
 // @author      timm
 // @version     1.0.2
-// @match       *://witanime.red/*
+// @match       *://witanime.you/*
 // @run-at      document-end
 // ==/UserScript==
 
@@ -138,7 +138,7 @@
         const performSearch = () => {
             const query = inputElement.value.trim();
             if (query) {
-                const searchUrl = `https://witanime.red/?search_param=animes&s=${query.replaceAll(" ","+")}`;
+                const searchUrl = `${window.location.origin}/?search_param=animes&s=${query.replaceAll(" ", "+")}`;
                 window.location.href = searchUrl;
             }
         };

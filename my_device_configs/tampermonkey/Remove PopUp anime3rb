@@ -1,0 +1,20 @@
+// ==UserScript==
+// @name         Remove PopUp anime3rb
+// @namespace    http://tampermonkey.net/
+// @version      2026-03-14
+// @description  try to take over the world!
+// @author       You
+// @match        https://anime3rb.com/*
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+    //const observer = new MutationObserver(() => {
+      setInterval(()=>{
+        Array.from(document.querySelectorAll('[x-show="isOpen"]')).forEach(ele => ele.remove());
+      },300);
+          //});
+    //observer.observe(document.body, { childList: true, subtree: true });
+})();
